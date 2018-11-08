@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ControleHoras.APRESENTACAO.Models.HorasExtrasViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Solicitaçõe de Hora Extra</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProfissionalID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContratoID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataInicial)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataFinal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pendente)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Profissional.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Contrato.Descricao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataInicial)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataFinal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pendente)
+        </td>
+        <td>
+            @Html.ActionLink("Aprovar", "Aprovar", new { id=item.AprovacaoID }) |
+            @Html.ActionLink("Reprovar", "Reprovar", new { id=item.AprovacaoID })
+        </td>
+    </tr>
+}
+
+</table>

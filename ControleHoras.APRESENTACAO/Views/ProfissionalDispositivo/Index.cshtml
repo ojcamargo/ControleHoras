@@ -1,0 +1,47 @@
+﻿@model IEnumerable<ControleHoras.APRESENTACAO.Models.ProfissionalDispositivoViewModel>
+
+@{
+    ViewBag.Title = "Lista de Dispositivos Móveis";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cadastro de Dispositivos Móveis</h2>
+
+<button type="button" class="btn btn-success">@Html.ActionLink("Novo Cadastro", "Create")</button>
+
+<table class="table table-striped table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Profissional.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Imei)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Telefone)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProfissionalID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Imei)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefone)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.ProfissionalDispositivoID }) |
+                @Html.ActionLink("Detalhes", "Details", new { id = item.ProfissionalDispositivoID }, htmlAttributes: new { @class = "text-success" }) |
+                @Html.ActionLink("Excluir", "Delete", new { id = item.ProfissionalDispositivoID }, htmlAttributes: new { @class = "text-danger" })
+
+            </td>
+        </tr>
+    }
+
+</table>

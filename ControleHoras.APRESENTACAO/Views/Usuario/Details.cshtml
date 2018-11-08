@@ -1,0 +1,58 @@
+﻿@model ControleHoras.APRESENTACAO.Models.UsuarioViewModel
+
+@{
+    ViewBag.Title = "Cadastro de Usuários";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cadastro de Contratos</h2>
+<nav class="breadcrumb">
+    @Html.ActionLink("Cliente", "Index") /
+    <span class="breadcrumb-item active">Detalhes</span>
+</nav>
+<div>
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayName("Cliente/Profissional")
+        </dt>
+
+        <dt>
+            @if (Model.ClienteID > 0)
+            {
+                @Html.DisplayFor(model => model.Cliente.Nome)
+            }
+            else if (Model.ProfissionalID > 0)
+            {
+                @Html.DisplayFor(model => model.Profissional.Nome)
+            }
+
+        </dt>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Login)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Login)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProfissionalID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Adm)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Adm)
+        </dd>
+        <dt>
+            <button type="button" class="btn btn-success">@Html.ActionLink("Editar", "Edit", new { id = Model.UsuarioID })</button>
+        </dt>
+    </dl>
+</div>
+<p>
+    &laquo;@Html.ActionLink("Voltar", "Index")
+</p>

@@ -1,0 +1,88 @@
+﻿@model IEnumerable<ControleHoras.APRESENTACAO.Models.ClienteLocalViewModel>
+
+@{
+    ViewBag.Title = "Configurações de Localização";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Configurações de Localização</h2>
+
+<button type="button" class="btn btn-success">@Html.ActionLink("Novo Cadastro", "Create")</button>
+
+<table class="table table-striped table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ClienteID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Logradouro)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumeroLogradouro)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Complemento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bairro)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cidade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UF)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CEP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Longitude)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Latitude)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cliente.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Logradouro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroLogradouro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Complemento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bairro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cidade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UF)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CEP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Longitude)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Latitude)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.LocalID }) |
+                @Html.ActionLink("Detalhes", "Details", new { id = item.LocalID }, htmlAttributes: new { @class = "text-success" }) |
+                @Html.ActionLink("Excluir", "Delete", new { id = item.LocalID }, htmlAttributes: new { @class = "text-danger" })
+            </td>
+        </tr>
+    }
+
+</table>

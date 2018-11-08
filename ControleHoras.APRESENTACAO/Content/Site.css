@@ -1,0 +1,170 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* ELEMENTOS */
+h2 {
+    padding: 10px 15px;
+    margin: 20px 0px;
+    font-size: 1.5em;
+    border-left: 5px solid #00528b;
+    color: #00528b;
+    background-color: #fff;
+}
+
+.content-login h3 {
+    text-align: center;
+    color: #00528b;
+}
+
+button a {
+    color: inherit;
+}
+
+button a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+button.btn-success {
+    height: 35px;
+    padding: 0px;
+}
+
+button.btn-success a {
+    padding: 10px 12px;
+}
+
+a.text-success:hover {
+    color:#468847;
+}
+
+a.text-danger:hover {
+    color:#b94a48;
+}
+
+.table {
+    margin-top: 15px;
+}
+
+.table th {
+    background-color: #00528b!important;
+    color: #fff; 
+}
+
+dl {
+    margin-bottom: 50px;
+}
+
+dl button {
+    margin-top: 15px;
+}
+
+footer {
+    background-color: #00528b;
+    padding: 15px;
+    margin-top: 15px;
+    color: #fff;
+}
+
+footer p {
+    text-align: center;
+    margin: 0px;
+}
+
+/* FIM ELEMENTOS*/
+
+
+/* DIAGRAMACAO */
+.container{
+    margin: 0 auto;
+}
+
+.jumbotron {
+    text-align: center;
+}
+/* FIM DIAGRAMACAO */
+
+/* NAV BAR*/
+.navbar-inverse {
+    background-color: #fff;
+}
+.navbar-brand {
+    padding: 0px 20px;
+}
+
+.navbar-nav {
+    margin: 0px;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: #00528b;
+    font-weight: bold;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+    padding: 15px 15px;
+}
+/* FIM NAV BAR*/
+
+.content-login {
+    width: 380px;
+    margin: 0 auto;
+    -webkit-box-shadow: 0px 0px 10px 2px #00528b;
+    box-shadow: 0px 0px 10px 2px #00528b;
+    padding: 10px;
+    margin-top: 20px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.content-login label {
+    float: none;
+    margin: 0px;
+    padding: 5px 0px;
+    color: #5c5c5c;
+}
+
+.content-login h2 {
+    text-align: center;
+    margin: 10px 0px 0px 0px;
+    color: #00528b;
+}
+
+.content-login input,.content-login select {
+    max-width: 100%;
+}
+
+.content-login input[type="submit"] {
+    margin-top: 20px;
+}
+
+.inputDate {
+    width: 100px;
+}
+
+.inputTime {
+    width: 80px;
+}
+

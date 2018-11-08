@@ -1,0 +1,42 @@
+﻿@model IEnumerable<ControleHoras.APRESENTACAO.Models.ProfissionalViewModel>
+
+@{
+    ViewBag.Title = "Lista de Profissionais";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cadastro de Profissionais</h2>
+
+<button type="button" class="btn btn-success">@Html.ActionLink("Novo Cadastro", "Create")</button>
+
+<table class="table table-striped table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.ProfissionalID }) |
+                @Html.ActionLink("Detalhes", "Details", new { id = item.ProfissionalID }, htmlAttributes: new { @class = "text-success" }) |
+                @Html.ActionLink("Excluir", "Delete", new { id = item.ProfissionalID }, htmlAttributes: new { @class = "text-danger" })
+                @if (item.Ativo)
+                {
+                    @Html.ActionLink("Desativar", "Desativar", new { id = item.ProfissionalID }, htmlAttributes: new { @class = "text-danger" });
+                }
+                @if (!item.Ativo)
+                {
+                    @Html.ActionLink("Reativar", "Reativar", new { id = item.ProfissionalID });
+                }
+            </td>
+        </tr>
+    }
+
+</table>

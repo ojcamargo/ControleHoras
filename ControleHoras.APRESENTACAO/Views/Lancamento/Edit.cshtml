@@ -1,0 +1,287 @@
+﻿@using ControleHoras.APRESENTACAO.Models
+@model ICollection<LancamentoEdicaoViewModel>
+
+
+@using (Html.BeginForm("Edit", "Lancamento", FormMethod.Post, new { model = Model }))
+{
+    if (Model != null && Model.Count > 0)
+    {
+        <table class="table">
+            <tr>
+                <th>Contrato</th>
+                <th>Atividade</th>
+                <th>Observacao</th>
+                <th>Pendente</th>
+                <th>Horário de Entrada</th>
+                <th>Horário de Saída</th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Contrato)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Atividade)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Observacao)
+                    </td>
+                    <td>
+                        @if (item.Pendente)
+                        {
+                            <span>Sim</span>
+                            <input type="button" id="btn-aprovar-@item.LancamentoID.ToString()" value="Aprovar" class="btn" onclick="aprovarLancamento(@item.LancamentoID)" />
+                        }
+                        else
+                        {
+                            <span>Não</span>
+                        }
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(modelItem => item.HorarioEntrada, new { @class="entrada-" + item.LancamentoID.ToString(), @readonly="true", @style="width: 150px; background-color: #c5c5c5" })
+                        <br />
+                        @Html.ValidationMessageFor(modelItem => item.HorarioEntrada)
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(modelItem => item.HorarioSaida, new { @class="saida-" + item.LancamentoID.ToString(), @readonly="true", @style= "width: 150px; background-color: #c5c5c5" })
+                        <br />
+                        @Html.ValidationMessageFor(modelItem => item.HorarioSaida)
+                    </td>
+                    <td>
+                        @Html.HiddenFor(modelItem => item.LancamentoID)
+                        <input type="button" id="btn-edit-@item.LancamentoID.ToString()" value="Editar" class="btn" onclick="habilitarEdicao(@item.LancamentoID)" />&nbsp;
+                        <input type="button" id="btn-excluir-@item.LancamentoID.ToString()" value="Excluir" class="btn" onclick="excluirLancamento(@item.LancamentoID)" />
+                    </td>
+                </tr>
+                }
+        </table>
+
+        <p style="margin: 40px 0px 40px 0px">&nbsp;</p>
+        
+        <script type="text/javascript">
+            var horarioEntrada;
+            var horarioSaida;
+
+            function habilitarEdicao(lancamento) {
+                if ($("#btn-edit-" + lancamento).val() == "Editar") {
+                    $.datetimepicker.setLocale('pt-BR');
+
+                    $('.entrada-' + lancamento).attr('readonly', false);
+                    $('.entrada-' + lancamento).css('background-color', '#ffffff');
+                    $('.saida-' + lancamento).attr('readonly', false);
+                    $('.saida-' + lancamento).css('background-color', '#ffffff');
+
+                    $('.entrada-' + lancamento).datetimepicker({ 
+                        format: 'd/m/Y H:i', 
+                        lang: 'pt-BR', 
+                        datepicker: true, 
+                        timepicker: true, 
+                        mask: false, 
+                        allowTimes:['00:00', '00:15', '00:30','00:45', 
+                            '01:00', '01:15', '01:30', '01:45',
+                            '02:00', '02:15', '02:30','02:45',
+                            '03:00', '03:15', '03:30','03:45',
+                            '04:00', '04:15', '04:30','04:45',
+                            '05:00', '05:15', '05:30','05:45',
+                            '06:00', '06:15', '06:30','06:45',
+                            '07:00', '07:15', '07:30','07:45',
+                            '08:00', '08:15', '08:30','08:45',
+                            '09:00', '09:15', '09:30','09:45',
+                            '10:00', '10:15', '10:30','10:45',
+                            '11:00', '11:15', '11:30','11:45',
+                            '12:00', '12:15', '12:30','12:45',
+                            '13:00', '13:15', '13:30','13:45',
+                            '14:00', '14:15', '14:30','14:45',
+                            '15:00', '15:15', '15:30','15:45',
+                            '16:00', '16:15', '16:30','16:45',
+                            '17:00', '17:15', '17:30','17:45',
+                            '18:00', '18:15', '18:30','18:45',
+                            '19:00', '19:15', '19:30','19:45',
+                            '20:00', '20:15', '20:30','20:45',
+                            '21:00', '21:15', '21:30','21:45',
+                            '22:00', '22:15', '22:30','22:45',
+                            '23:00', '23:15', '23:30','23:45']
+                    });
+                    $('.saida-' + lancamento).datetimepicker({ 
+                        format: 'd/m/Y H:i', 
+                        lang: 'pt-BR', 
+                        datepicker: true, 
+                        timepicker: true, 
+                        mask: false, 
+                        allowTimes:['00:00', '00:15', '00:30','00:45', 
+                            '01:00', '01:15', '01:30', '01:45',
+                            '02:00', '02:15', '02:30','02:45',
+                            '03:00', '03:15', '03:30','03:45',
+                            '04:00', '04:15', '04:30','04:45',
+                            '05:00', '05:15', '05:30','05:45',
+                            '06:00', '06:15', '06:30','06:45',
+                            '07:00', '07:15', '07:30','07:45',
+                            '08:00', '08:15', '08:30','08:45',
+                            '09:00', '09:15', '09:30','09:45',
+                            '10:00', '10:15', '10:30','10:45',
+                            '11:00', '11:15', '11:30','11:45',
+                            '12:00', '12:15', '12:30','12:45',
+                            '13:00', '13:15', '13:30','13:45',
+                            '14:00', '14:15', '14:30','14:45',
+                            '15:00', '15:15', '15:30','15:45',
+                            '16:00', '16:15', '16:30','16:45',
+                            '17:00', '17:15', '17:30','17:45',
+                            '18:00', '18:15', '18:30','18:45',
+                            '19:00', '19:15', '19:30','19:45',
+                            '20:00', '20:15', '20:30','20:45',
+                            '21:00', '21:15', '21:30','21:45',
+                            '22:00', '22:15', '22:30','22:45',
+                            '23:00', '23:15', '23:30','23:45']
+                    });
+
+                    
+                    $("#btn-edit-" + lancamento).removeClass("btn");
+                    $("#btn-edit-" + lancamento).addClass("btn btn-success");
+                    $("#btn-edit-" + lancamento).val("Salvar");
+                } else {
+                    if (validarDatas($('.entrada-' + lancamento).val(), $('.saida-' + lancamento).val())) {
+                        
+                        var model = {
+                            LancamentoID: lancamento,
+                            HorarioEntrada: horarioEntrada.format("YYYY-MM-DD HH:mm:ss"),
+                            HorarioSaida: horarioSaida.format("YYYY-MM-DD HH:mm:ss")
+                        };
+
+                        $.ajax({
+                            url: "/Lancamento/Atualizar",
+                            type: "POST",
+                            data: JSON.stringify({ 'lancamento': model }),
+                            dataType: "json",
+                            traditional: true,
+                            contentType: "application/json; charset=utf-8",
+                            success: function (data) {
+                                if (data == "sucesso") {
+                                    $.MessageBox("Lançamento alterado com sucesso");
+
+                                    $('.entrada-' + lancamento).attr('readonly', true);
+                                    $('.entrada-' + lancamento).css('background-color', '#c5c5c5');
+                                    $('.saida-' + lancamento).attr('readonly', true);
+                                    $('.saida-' + lancamento).css('background-color', '#c5c5c5');
+
+                                    $("#btn-edit-" + lancamento).removeClass("btn btn-success");
+                                    $("#btn-edit-" + lancamento).addClass("btn");
+                                    $("#btn-edit-" + lancamento).val("Editar");
+                                }
+                                else
+                                    $.MessageBox("Não foi possível efetuar a alteração do lançamento.\n" + data);
+                            },
+                            error: function (erro) {
+                                $.MessageBox("Erro ao efetuar alteração do lançamento: " + erro);
+                            }
+                        });
+                    }
+                }
+            }
+
+            function aprovarLancamento(lancamento) {
+                $.MessageBox({
+                    buttonDone: "Sim",
+                    buttonFail: "Não",
+                    message: "Confirmar aprovação deste lançamento? Esta ação não poderá ser revertida!"
+                }).done(function () {
+                    //Confirmar aprovação
+                    $.ajax({
+                        url: "/Lancamento/Aprovar",
+                        type: "POST",
+                        data: JSON.stringify({ 'lancamentoId': lancamento }),
+                        dataType: "json",
+                        traditional: true,
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            if (data == "sucesso") {
+                                //Atualizar grid
+                                efetuarPesquisa();
+                                $.MessageBox("Lançamento aprovado com sucesso");
+                            }
+                            else
+                                $.MessageBox("Não foi possível efetuar o excluir o lançamento.\n" + data);
+                        },
+                        error: function (erro) {
+                            $.MessageBox("Erro ao excluir lançamento: " + erro);
+                        }
+                    });
+                }).fail(function () {
+                    //Exclusão cancelada
+                });
+            }
+
+            function excluirLancamento(lancamento) {
+                $.MessageBox({
+                    buttonDone: "Sim",
+                    buttonFail: "Não",
+                    message: "Confirmar exclusão do lançamento? Esta ação não poderá ser revertida!"
+                }).done(function () {
+                    //Confirmar exclusão
+                    $.ajax({
+                        url: "/Lancamento/Excluir",
+                        type: "POST",
+                        data: JSON.stringify({ 'lancamentoId': lancamento }),
+                        dataType: "json",
+                        traditional: true,
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            if (data == "sucesso") {
+                                //Atualizar grid
+                                efetuarPesquisa();
+                                $.MessageBox("Lançamento excluído com sucesso");
+                            }
+                            else
+                                $.MessageBox("Não foi possível efetuar o excluir o lançamento.\n" + data);
+                        },
+                        error: function (erro) {
+                            $.MessageBox("Erro ao excluir lançamento: " + erro);
+                        }
+                    });
+                }).fail(function () {
+                    //Exclusão cancelada
+                });
+            }
+
+            function validarDatas(dataInicial, dataFinal) {
+                //Converter datas em texto
+                var strData1 = String(dataInicial);
+                var strData2 = String(dataFinal);
+
+                //Datas devem estar no formato "DD/MM/YYYY HH:mm"
+                if(strData1.length < 16)
+                    return false;
+                if(strData2.length < 16)
+                    return false;
+                //Retirar segundos
+                if(strData1.length > 16)
+                    strData1 = strData1.substring(0,16);
+                if(strData2.length > 16)
+                    strData2 = strData2.substring(0,16);
+
+                horarioEntrada = moment(strData1,"DD/MM/YYYY HH:mm", true);
+                horarioSaida = moment(strData2,"DD/MM/YYYY HH:mm", true)
+                
+                if (!horarioEntrada.isValid) {
+                    $.MessageBox("Horário de entrada inválido");
+                    return false;
+                }
+                if (!horarioSaida.isValid) {
+                    $.MessageBox("Horário de saída inválido");
+                    return false;
+                }
+                if (horarioSaida.isBefore(horarioEntrada)) {
+                    $.MessageBox("Horário de saída não pode ser menor que horário de entrada");
+                    return false;
+                }
+
+                return true;
+            }
+        </script>
+    }
+    else
+    {
+        @Html.Label("Nenhum registro encontrado.")
+    }
+}

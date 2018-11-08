@@ -1,0 +1,859 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ControleHorasContext.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Alocacao">
+          <Key>
+            <PropertyRef Name="ContratoID" />
+            <PropertyRef Name="ProfissionalID" />
+          </Key>
+          <Property Name="ContratoID" Type="int" Nullable="false" />
+          <Property Name="ProfissionalID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="ClienteID" />
+          </Key>
+          <Property Name="ClienteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Ativo" Type="bit" Nullable="false" />
+          <Property Name="CNPJ" Type="varchar" MaxLength="14" />
+        </EntityType>
+        <EntityType Name="ClienteIp">
+          <Key>
+            <PropertyRef Name="ClienteIpID" />
+          </Key>
+          <Property Name="ClienteIpID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClienteID" Type="int" Nullable="false" />
+          <Property Name="Ip" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClienteLocal">
+          <Key>
+            <PropertyRef Name="LocalID" />
+          </Key>
+          <Property Name="LocalID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClienteID" Type="int" Nullable="false" />
+          <Property Name="Logradouro" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NumeroLogradouro" Type="varchar" MaxLength="10" />
+          <Property Name="Complemento" Type="varchar" MaxLength="50" />
+          <Property Name="Bairro" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cidade" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UF" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="CEP" Type="varchar" MaxLength="9" />
+          <Property Name="Longitude" Type="float" Nullable="false" />
+          <Property Name="Latitude" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Contrato">
+          <Key>
+            <PropertyRef Name="ContratoID" />
+          </Key>
+          <Property Name="ContratoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClienteID" Type="int" Nullable="false" />
+          <Property Name="NumeroReferencia" Type="varchar" MaxLength="20" />
+          <Property Name="ModalidadeContrato" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="ModalidadeApuracao" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="QtdHorasMes" Type="int" />
+          <Property Name="ApuracaoHoraExtra" Type="bit" Nullable="false" />
+          <Property Name="ValorHoraExtra" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="DataCadastro" Type="datetime" />
+          <Property Name="DataInicio" Type="datetime" />
+          <Property Name="DataFim" Type="datetime" />
+          <Property Name="Descricao" Type="varchar" MaxLength="50" />
+          <Property Name="Ativo" Type="bit" Nullable="false" />
+          <Property Name="ValorHora" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="HorarioEntrada" Type="time" Precision="7" />
+          <Property Name="HorarioSaida" Type="time" Precision="7" />
+          <Property Name="IntervaloInicio" Type="time" Precision="7" />
+          <Property Name="IntervaloFim" Type="time" Precision="7" />
+          <Property Name="ValidarLocalizacao" Type="bit" />
+        </EntityType>
+        <EntityType Name="HorasExtras">
+          <Key>
+            <PropertyRef Name="AprovacaoID" />
+          </Key>
+          <Property Name="AprovacaoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProfissionalID" Type="int" Nullable="false" />
+          <Property Name="DataInicial" Type="datetime" Nullable="false" />
+          <Property Name="DataFinal" Type="datetime" Nullable="false" />
+          <Property Name="Pendente" Type="bit" Nullable="false" />
+          <Property Name="ContratoID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Lancamento">
+          <Key>
+            <PropertyRef Name="LancamentoID" />
+          </Key>
+          <Property Name="LancamentoID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ContratoID" Type="int" Nullable="false" />
+          <Property Name="ProfissionalID" Type="int" Nullable="false" />
+          <Property Name="HorarioEntrada" Type="datetime" />
+          <Property Name="HorarioSaida" Type="datetime" />
+          <Property Name="Atividade" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="LocalValidado" Type="bit" />
+          <Property Name="Observacao" Type="varchar" MaxLength="800" />
+          <Property Name="Pendente" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Profissional">
+          <Key>
+            <PropertyRef Name="ProfissionalID" />
+          </Key>
+          <Property Name="ProfissionalID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="HorarioEntrada" Type="time" Precision="7" />
+          <Property Name="HorarioSaida" Type="time" Precision="7" />
+          <Property Name="ValorHora" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="ValorMensal" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="Ativo" Type="bit" Nullable="false" />
+          <Property Name="ModalidadeApuracao" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Regime" Type="varchar" MaxLength="5" />
+          <Property Name="FeriasInicio" Type="datetime" />
+          <Property Name="FeriasTermino" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ProfissionalDispositivo">
+          <Key>
+            <PropertyRef Name="ProfissionalDispositivoID" />
+          </Key>
+          <Property Name="ProfissionalDispositivoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProfissionalID" Type="int" Nullable="false" />
+          <Property Name="Imei" Type="varchar" MaxLength="20" />
+          <Property Name="Telefone" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="UsuarioID" />
+          </Key>
+          <Property Name="UsuarioID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Senha" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ClienteID" Type="int" />
+          <Property Name="ProfissionalID" Type="int" />
+          <Property Name="Adm" Type="bit" />
+        </EntityType>
+        <Association Name="FK_AprovacaoHorasExtras_Profissional">
+          <End Role="Profissional" Type="Self.Profissional" Multiplicity="1" />
+          <End Role="HorasExtras" Type="Self.HorasExtras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profissional">
+              <PropertyRef Name="ProfissionalID" />
+            </Principal>
+            <Dependent Role="HorasExtras">
+              <PropertyRef Name="ProfissionalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_Contrato">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteID" />
+            </Principal>
+            <Dependent Role="Contrato">
+              <PropertyRef Name="ClienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_IP">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="ClienteIp" Type="Self.ClienteIp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteID" />
+            </Principal>
+            <Dependent Role="ClienteIp">
+              <PropertyRef Name="ClienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_Local">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="ClienteLocal" Type="Self.ClienteLocal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteID" />
+            </Principal>
+            <Dependent Role="ClienteLocal">
+              <PropertyRef Name="ClienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_Usuario">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteID" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="ClienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contrato_Alocacao">
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="1" />
+          <End Role="Alocacao" Type="Self.Alocacao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contrato">
+              <PropertyRef Name="ContratoID" />
+            </Principal>
+            <Dependent Role="Alocacao">
+              <PropertyRef Name="ContratoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HorasExtras_Contrato">
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="1" />
+          <End Role="HorasExtras" Type="Self.HorasExtras" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contrato">
+              <PropertyRef Name="ContratoID" />
+            </Principal>
+            <Dependent Role="HorasExtras">
+              <PropertyRef Name="ContratoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LancamentoContrato">
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="1" />
+          <End Role="Lancamento" Type="Self.Lancamento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contrato">
+              <PropertyRef Name="ContratoID" />
+            </Principal>
+            <Dependent Role="Lancamento">
+              <PropertyRef Name="ContratoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LancamentoProfissional">
+          <End Role="Profissional" Type="Self.Profissional" Multiplicity="1" />
+          <End Role="Lancamento" Type="Self.Lancamento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profissional">
+              <PropertyRef Name="ProfissionalID" />
+            </Principal>
+            <Dependent Role="Lancamento">
+              <PropertyRef Name="ProfissionalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profissional_Alocacao">
+          <End Role="Profissional" Type="Self.Profissional" Multiplicity="1" />
+          <End Role="Alocacao" Type="Self.Alocacao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profissional">
+              <PropertyRef Name="ProfissionalID" />
+            </Principal>
+            <Dependent Role="Alocacao">
+              <PropertyRef Name="ProfissionalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profissional_Dispositivo">
+          <End Role="Profissional" Type="Self.Profissional" Multiplicity="1" />
+          <End Role="ProfissionalDispositivo" Type="Self.ProfissionalDispositivo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profissional">
+              <PropertyRef Name="ProfissionalID" />
+            </Principal>
+            <Dependent Role="ProfissionalDispositivo">
+              <PropertyRef Name="ProfissionalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profissional_Usuario">
+          <End Role="Profissional" Type="Self.Profissional" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profissional">
+              <PropertyRef Name="ProfissionalID" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="ProfissionalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ControleHorasContextStoreContainer">
+          <EntitySet Name="Alocacao" EntityType="Self.Alocacao" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClienteIp" EntityType="Self.ClienteIp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClienteLocal" EntityType="Self.ClienteLocal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contrato" EntityType="Self.Contrato" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HorasExtras" EntityType="Self.HorasExtras" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lancamento" EntityType="Self.Lancamento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profissional" EntityType="Self.Profissional" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProfissionalDispositivo" EntityType="Self.ProfissionalDispositivo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AprovacaoHorasExtras_Profissional" Association="Self.FK_AprovacaoHorasExtras_Profissional">
+            <End Role="Profissional" EntitySet="Profissional" />
+            <End Role="HorasExtras" EntitySet="HorasExtras" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_Contrato" Association="Self.FK_Cliente_Contrato">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Contrato" EntitySet="Contrato" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_IP" Association="Self.FK_Cliente_IP">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="ClienteIp" EntitySet="ClienteIp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_Local" Association="Self.FK_Cliente_Local">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="ClienteLocal" EntitySet="ClienteLocal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_Usuario" Association="Self.FK_Cliente_Usuario">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contrato_Alocacao" Association="Self.FK_Contrato_Alocacao">
+            <End Role="Contrato" EntitySet="Contrato" />
+            <End Role="Alocacao" EntitySet="Alocacao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HorasExtras_Contrato" Association="Self.FK_HorasExtras_Contrato">
+            <End Role="Contrato" EntitySet="Contrato" />
+            <End Role="HorasExtras" EntitySet="HorasExtras" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LancamentoContrato" Association="Self.FK_LancamentoContrato">
+            <End Role="Contrato" EntitySet="Contrato" />
+            <End Role="Lancamento" EntitySet="Lancamento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LancamentoProfissional" Association="Self.FK_LancamentoProfissional">
+            <End Role="Profissional" EntitySet="Profissional" />
+            <End Role="Lancamento" EntitySet="Lancamento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profissional_Alocacao" Association="Self.FK_Profissional_Alocacao">
+            <End Role="Profissional" EntitySet="Profissional" />
+            <End Role="Alocacao" EntitySet="Alocacao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profissional_Dispositivo" Association="Self.FK_Profissional_Dispositivo">
+            <End Role="Profissional" EntitySet="Profissional" />
+            <End Role="ProfissionalDispositivo" EntitySet="ProfissionalDispositivo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profissional_Usuario" Association="Self.FK_Profissional_Usuario">
+            <End Role="Profissional" EntitySet="Profissional" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ControleHorasContext" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Alocacao">
+          <Key>
+            <PropertyRef Name="ContratoID" />
+            <PropertyRef Name="ProfissionalID" />
+          </Key>
+          <Property Name="ContratoID" Type="Int32" Nullable="false" />
+          <Property Name="ProfissionalID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Contrato" Relationship="Self.FK_Contrato_Alocacao" FromRole="Alocacao" ToRole="Contrato" />
+          <NavigationProperty Name="Profissional" Relationship="Self.FK_Profissional_Alocacao" FromRole="Alocacao" ToRole="Profissional" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="ClienteID" />
+          </Key>
+          <Property Name="ClienteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ativo" Type="Boolean" Nullable="false" />
+          <Property Name="CNPJ" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Contrato" Relationship="Self.FK_Cliente_Contrato" FromRole="Cliente" ToRole="Contrato" />
+          <NavigationProperty Name="ClienteIp" Relationship="Self.FK_Cliente_IP" FromRole="Cliente" ToRole="ClienteIp" />
+          <NavigationProperty Name="ClienteLocal" Relationship="Self.FK_Cliente_Local" FromRole="Cliente" ToRole="ClienteLocal" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Cliente_Usuario" FromRole="Cliente" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="ClienteIp">
+          <Key>
+            <PropertyRef Name="ClienteIpID" />
+          </Key>
+          <Property Name="ClienteIpID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClienteID" Type="Int32" Nullable="false" />
+          <Property Name="Ip" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_Cliente_IP" FromRole="ClienteIp" ToRole="Cliente" />
+        </EntityType>
+        <EntityType Name="ClienteLocal">
+          <Key>
+            <PropertyRef Name="LocalID" />
+          </Key>
+          <Property Name="LocalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClienteID" Type="Int32" Nullable="false" />
+          <Property Name="Logradouro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NumeroLogradouro" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Complemento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Bairro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cidade" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UF" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CEP" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="Longitude" Type="Double" Nullable="false" />
+          <Property Name="Latitude" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_Cliente_Local" FromRole="ClienteLocal" ToRole="Cliente" />
+        </EntityType>
+        <EntityType Name="Contrato">
+          <Key>
+            <PropertyRef Name="ContratoID" />
+          </Key>
+          <Property Name="ContratoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClienteID" Type="Int32" Nullable="false" />
+          <Property Name="NumeroReferencia" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ModalidadeContrato" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ModalidadeApuracao" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="QtdHorasMes" Type="Int32" />
+          <Property Name="ApuracaoHoraExtra" Type="Boolean" Nullable="false" />
+          <Property Name="ValorHoraExtra" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="DataCadastro" Type="DateTime" Precision="3" />
+          <Property Name="DataInicio" Type="DateTime" Precision="3" />
+          <Property Name="DataFim" Type="DateTime" Precision="3" />
+          <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Ativo" Type="Boolean" Nullable="false" />
+          <Property Name="ValorHora" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="HorarioEntrada" Type="Time" Precision="7" />
+          <Property Name="HorarioSaida" Type="Time" Precision="7" />
+          <Property Name="IntervaloInicio" Type="Time" Precision="7" />
+          <Property Name="IntervaloFim" Type="Time" Precision="7" />
+          <Property Name="ValidarLocalizacao" Type="Boolean" />
+          <NavigationProperty Name="Alocacao" Relationship="Self.FK_Contrato_Alocacao" FromRole="Contrato" ToRole="Alocacao" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_Cliente_Contrato" FromRole="Contrato" ToRole="Cliente" />
+          <NavigationProperty Name="Lancamento" Relationship="ControleHorasContext.FK_LancamentoContrato" FromRole="Contrato" ToRole="Lancamento" />
+          <NavigationProperty Name="HorasExtras" Relationship="ControleHorasContext.FK_HorasExtras_Contrato" FromRole="Contrato" ToRole="HorasExtras1" />
+        </EntityType>
+        <EntityType Name="Lancamento">
+          <Key>
+            <PropertyRef Name="LancamentoID" />
+          </Key>
+          <Property Name="LancamentoID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ContratoID" Type="Int32" Nullable="false" />
+          <Property Name="ProfissionalID" Type="Int32" Nullable="false" />
+          <Property Name="HorarioEntrada" Type="DateTime" Precision="3" />
+          <Property Name="HorarioSaida" Type="DateTime" Precision="3" />
+          <Property Name="Atividade" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LocalValidado" Type="Boolean" />
+          <Property Name="Observacao" Type="String" MaxLength="800" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Contrato" Relationship="ControleHorasContext.FK_LancamentoContrato" FromRole="Lancamento" ToRole="Contrato" />
+          <NavigationProperty Name="Profissional" Relationship="ControleHorasContext.FK_LancamentoProfissional" FromRole="Lancamento" ToRole="Profissional" />
+          <Property Name="Pendente" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Profissional">
+          <Key>
+            <PropertyRef Name="ProfissionalID" />
+          </Key>
+          <Property Name="ProfissionalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HorarioEntrada" Type="Time" Precision="7" />
+          <Property Name="HorarioSaida" Type="Time" Precision="7" />
+          <Property Name="ValorHora" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ValorMensal" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Ativo" Type="Boolean" Nullable="false" />
+          <Property Name="ModalidadeApuracao" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Alocacao" Relationship="Self.FK_Profissional_Alocacao" FromRole="Profissional" ToRole="Alocacao" />
+          <NavigationProperty Name="ProfissionalDispositivo" Relationship="Self.FK_Profissional_Dispositivo" FromRole="Profissional" ToRole="ProfissionalDispositivo" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Profissional_Usuario" FromRole="Profissional" ToRole="Usuario" />
+          <Property Name="Regime" Type="String" MaxLength="5" Unicode="false" FixedLength="false" />
+          <Property Name="FeriasInicio" Type="DateTime" Precision="3" />
+          <Property Name="FeriasTermino" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Lancamento" Relationship="ControleHorasContext.FK_LancamentoProfissional" FromRole="Profissional" ToRole="Lancamento" />
+          <NavigationProperty Name="HorasExtras" Relationship="ControleHorasContext.FK_AprovacaoHorasExtras_Profissional1" FromRole="Profissional" ToRole="HorasExtras1" />
+        </EntityType>
+        <EntityType Name="ProfissionalDispositivo">
+          <Key>
+            <PropertyRef Name="ProfissionalDispositivoID" />
+          </Key>
+          <Property Name="ProfissionalDispositivoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProfissionalID" Type="Int32" Nullable="false" />
+          <Property Name="Imei" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Telefone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Profissional" Relationship="Self.FK_Profissional_Dispositivo" FromRole="ProfissionalDispositivo" ToRole="Profissional" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="UsuarioID" />
+          </Key>
+          <Property Name="UsuarioID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Senha" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ClienteID" Type="Int32" />
+          <Property Name="ProfissionalID" Type="Int32" />
+          <Property Name="Adm" Type="Boolean" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_Cliente_Usuario" FromRole="Usuario" ToRole="Cliente" />
+          <NavigationProperty Name="Profissional" Relationship="Self.FK_Profissional_Usuario" FromRole="Usuario" ToRole="Profissional" />
+        </EntityType>
+        <Association Name="FK_Contrato_Alocacao">
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="1" />
+          <End Role="Alocacao" Type="Self.Alocacao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contrato">
+              <PropertyRef Name="ContratoID" />
+            </Principal>
+            <Dependent Role="Alocacao">
+              <PropertyRef Name="ContratoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profissional_Alocacao">
+          <End Role="Profissional" Type="Self.Profissional" Multiplicity="1" />
+          <End Role="Alocacao" Type="Self.Alocacao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profissional">
+              <PropertyRef Name="ProfissionalID" />
+            </Principal>
+            <Dependent Role="Alocacao">
+              <PropertyRef Name="ProfissionalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_Contrato">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteID" />
+            </Principal>
+            <Dependent Role="Contrato">
+              <PropertyRef Name="ClienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_IP">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="ClienteIp" Type="Self.ClienteIp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteID" />
+            </Principal>
+            <Dependent Role="ClienteIp">
+              <PropertyRef Name="ClienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_Local">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="ClienteLocal" Type="Self.ClienteLocal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteID" />
+            </Principal>
+            <Dependent Role="ClienteLocal">
+              <PropertyRef Name="ClienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_Usuario">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ClienteID" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="ClienteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profissional_Dispositivo">
+          <End Role="Profissional" Type="Self.Profissional" Multiplicity="1" />
+          <End Role="ProfissionalDispositivo" Type="Self.ProfissionalDispositivo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profissional">
+              <PropertyRef Name="ProfissionalID" />
+            </Principal>
+            <Dependent Role="ProfissionalDispositivo">
+              <PropertyRef Name="ProfissionalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profissional_Usuario">
+          <End Role="Profissional" Type="Self.Profissional" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profissional">
+              <PropertyRef Name="ProfissionalID" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="ProfissionalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Alocacao" EntityType="Self.Alocacao" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="ClienteIp" EntityType="Self.ClienteIp" />
+          <EntitySet Name="ClienteLocal" EntityType="Self.ClienteLocal" />
+          <EntitySet Name="Contrato" EntityType="Self.Contrato" />
+          <EntitySet Name="Lancamento" EntityType="Self.Lancamento" />
+          <EntitySet Name="Profissional" EntityType="Self.Profissional" />
+          <EntitySet Name="ProfissionalDispositivo" EntityType="Self.ProfissionalDispositivo" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK_Contrato_Alocacao" Association="Self.FK_Contrato_Alocacao">
+            <End Role="Contrato" EntitySet="Contrato" />
+            <End Role="Alocacao" EntitySet="Alocacao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profissional_Alocacao" Association="Self.FK_Profissional_Alocacao">
+            <End Role="Profissional" EntitySet="Profissional" />
+            <End Role="Alocacao" EntitySet="Alocacao" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_Contrato" Association="Self.FK_Cliente_Contrato">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Contrato" EntitySet="Contrato" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_IP" Association="Self.FK_Cliente_IP">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="ClienteIp" EntitySet="ClienteIp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_Local" Association="Self.FK_Cliente_Local">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="ClienteLocal" EntitySet="ClienteLocal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_Usuario" Association="Self.FK_Cliente_Usuario">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profissional_Dispositivo" Association="Self.FK_Profissional_Dispositivo">
+            <End Role="Profissional" EntitySet="Profissional" />
+            <End Role="ProfissionalDispositivo" EntitySet="ProfissionalDispositivo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profissional_Usuario" Association="Self.FK_Profissional_Usuario">
+            <End Role="Profissional" EntitySet="Profissional" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LancamentoContrato" Association="ControleHorasContext.FK_LancamentoContrato">
+            <End Role="Contrato" EntitySet="Contrato" />
+            <End Role="Lancamento" EntitySet="Lancamento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LancamentoProfissional" Association="ControleHorasContext.FK_LancamentoProfissional">
+            <End Role="Profissional" EntitySet="Profissional" />
+            <End Role="Lancamento" EntitySet="Lancamento" />
+          </AssociationSet>
+          <EntitySet Name="HorasExtrasSet" EntityType="ControleHorasContext.HorasExtras" />
+          <AssociationSet Name="FK_HorasExtras_Contrato" Association="ControleHorasContext.FK_HorasExtras_Contrato">
+            <End Role="Contrato" EntitySet="Contrato" />
+            <End Role="HorasExtras1" EntitySet="HorasExtrasSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AprovacaoHorasExtras_Profissional1" Association="ControleHorasContext.FK_AprovacaoHorasExtras_Profissional1">
+            <End Role="Profissional" EntitySet="Profissional" />
+            <End Role="HorasExtras1" EntitySet="HorasExtrasSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_LancamentoContrato">
+          <End Type="ControleHorasContext.Contrato" Role="Contrato" Multiplicity="1" />
+          <End Type="ControleHorasContext.Lancamento" Role="Lancamento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contrato">
+              <PropertyRef Name="ContratoID" />
+            </Principal>
+            <Dependent Role="Lancamento">
+              <PropertyRef Name="ContratoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LancamentoProfissional">
+          <End Type="ControleHorasContext.Profissional" Role="Profissional" Multiplicity="1" />
+          <End Type="ControleHorasContext.Lancamento" Role="Lancamento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profissional">
+              <PropertyRef Name="ProfissionalID" />
+            </Principal>
+            <Dependent Role="Lancamento">
+              <PropertyRef Name="ProfissionalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="HorasExtras">
+          <Key>
+            <PropertyRef Name="AprovacaoID" />
+          </Key>
+          <Property Name="AprovacaoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProfissionalID" Type="Int32" Nullable="false" />
+          <Property Name="DataInicial" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DataFinal" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Pendente" Type="Boolean" Nullable="false" />
+          <Property Name="ContratoID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Contrato" Relationship="ControleHorasContext.FK_HorasExtras_Contrato" FromRole="HorasExtras1" ToRole="Contrato" />
+          <NavigationProperty Name="Profissional" Relationship="ControleHorasContext.FK_AprovacaoHorasExtras_Profissional1" FromRole="HorasExtras1" ToRole="Profissional" />
+        </EntityType>
+        <Association Name="FK_HorasExtras_Contrato">
+          <End Type="ControleHorasContext.Contrato" Role="Contrato" Multiplicity="1" />
+          <End Type="ControleHorasContext.HorasExtras" Role="HorasExtras1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contrato">
+              <PropertyRef Name="ContratoID" />
+            </Principal>
+            <Dependent Role="HorasExtras1">
+              <PropertyRef Name="ContratoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AprovacaoHorasExtras_Profissional1">
+          <End Type="ControleHorasContext.Profissional" Role="Profissional" Multiplicity="1" />
+          <End Type="ControleHorasContext.HorasExtras" Role="HorasExtras1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profissional">
+              <PropertyRef Name="ProfissionalID" />
+            </Principal>
+            <Dependent Role="HorasExtras1">
+              <PropertyRef Name="ProfissionalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ControleHorasContextStoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="Alocacao">
+      <EntityTypeMapping TypeName="IsTypeOf(ControleHorasContext.Alocacao)">
+        <MappingFragment StoreEntitySet="Alocacao">
+          <ScalarProperty Name="ContratoID" ColumnName="ContratoID" />
+          <ScalarProperty Name="ProfissionalID" ColumnName="ProfissionalID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cliente">
+      <EntityTypeMapping TypeName="IsTypeOf(ControleHorasContext.Cliente)">
+        <MappingFragment StoreEntitySet="Cliente">
+          <ScalarProperty Name="ClienteID" ColumnName="ClienteID" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+          <ScalarProperty Name="CNPJ" ColumnName="CNPJ" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ClienteIp">
+      <EntityTypeMapping TypeName="IsTypeOf(ControleHorasContext.ClienteIp)">
+        <MappingFragment StoreEntitySet="ClienteIp">
+          <ScalarProperty Name="ClienteIpID" ColumnName="ClienteIpID" />
+          <ScalarProperty Name="ClienteID" ColumnName="ClienteID" />
+          <ScalarProperty Name="Ip" ColumnName="Ip" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ClienteLocal">
+      <EntityTypeMapping TypeName="IsTypeOf(ControleHorasContext.ClienteLocal)">
+        <MappingFragment StoreEntitySet="ClienteLocal">
+          <ScalarProperty Name="LocalID" ColumnName="LocalID" />
+          <ScalarProperty Name="ClienteID" ColumnName="ClienteID" />
+          <ScalarProperty Name="Logradouro" ColumnName="Logradouro" />
+          <ScalarProperty Name="NumeroLogradouro" ColumnName="NumeroLogradouro" />
+          <ScalarProperty Name="Complemento" ColumnName="Complemento" />
+          <ScalarProperty Name="Bairro" ColumnName="Bairro" />
+          <ScalarProperty Name="Cidade" ColumnName="Cidade" />
+          <ScalarProperty Name="UF" ColumnName="UF" />
+          <ScalarProperty Name="CEP" ColumnName="CEP" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contrato">
+      <EntityTypeMapping TypeName="IsTypeOf(ControleHorasContext.Contrato)">
+        <MappingFragment StoreEntitySet="Contrato">
+          <ScalarProperty Name="ContratoID" ColumnName="ContratoID" />
+          <ScalarProperty Name="ClienteID" ColumnName="ClienteID" />
+          <ScalarProperty Name="NumeroReferencia" ColumnName="NumeroReferencia" />
+          <ScalarProperty Name="ModalidadeContrato" ColumnName="ModalidadeContrato" />
+          <ScalarProperty Name="ModalidadeApuracao" ColumnName="ModalidadeApuracao" />
+          <ScalarProperty Name="QtdHorasMes" ColumnName="QtdHorasMes" />
+          <ScalarProperty Name="ApuracaoHoraExtra" ColumnName="ApuracaoHoraExtra" />
+          <ScalarProperty Name="ValorHoraExtra" ColumnName="ValorHoraExtra" />
+          <ScalarProperty Name="DataCadastro" ColumnName="DataCadastro" />
+          <ScalarProperty Name="DataInicio" ColumnName="DataInicio" />
+          <ScalarProperty Name="DataFim" ColumnName="DataFim" />
+          <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+          <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+          <ScalarProperty Name="ValorHora" ColumnName="ValorHora" />
+          <ScalarProperty Name="HorarioEntrada" ColumnName="HorarioEntrada" />
+          <ScalarProperty Name="HorarioSaida" ColumnName="HorarioSaida" />
+          <ScalarProperty Name="IntervaloInicio" ColumnName="IntervaloInicio" />
+          <ScalarProperty Name="IntervaloFim" ColumnName="IntervaloFim" />
+          <ScalarProperty Name="ValidarLocalizacao" ColumnName="ValidarLocalizacao" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Lancamento">
+      <EntityTypeMapping TypeName="IsTypeOf(ControleHorasContext.Lancamento)">
+        <MappingFragment StoreEntitySet="Lancamento">
+          <ScalarProperty Name="Pendente" ColumnName="Pendente" />
+                <ScalarProperty Name="Observacao" ColumnName="Observacao" />
+                <ScalarProperty Name="LancamentoID" ColumnName="LancamentoID" />
+          <ScalarProperty Name="ContratoID" ColumnName="ContratoID" />
+          <ScalarProperty Name="ProfissionalID" ColumnName="ProfissionalID" />
+          <ScalarProperty Name="HorarioEntrada" ColumnName="HorarioEntrada" />
+          <ScalarProperty Name="HorarioSaida" ColumnName="HorarioSaida" />
+          <ScalarProperty Name="Atividade" ColumnName="Atividade" />
+          <ScalarProperty Name="LocalValidado" ColumnName="LocalValidado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Profissional">
+      <EntityTypeMapping TypeName="IsTypeOf(ControleHorasContext.Profissional)">
+        <MappingFragment StoreEntitySet="Profissional">
+          <ScalarProperty Name="FeriasTermino" ColumnName="FeriasTermino" />
+                <ScalarProperty Name="FeriasInicio" ColumnName="FeriasInicio" />
+                <ScalarProperty Name="ProfissionalID" ColumnName="ProfissionalID" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="HorarioEntrada" ColumnName="HorarioEntrada" />
+          <ScalarProperty Name="HorarioSaida" ColumnName="HorarioSaida" />
+          <ScalarProperty Name="ValorHora" ColumnName="ValorHora" />
+          <ScalarProperty Name="ValorMensal" ColumnName="ValorMensal" />
+          <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+          <ScalarProperty Name="ModalidadeApuracao" ColumnName="ModalidadeApuracao" />
+          <ScalarProperty Name="Regime" ColumnName="Regime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProfissionalDispositivo">
+      <EntityTypeMapping TypeName="IsTypeOf(ControleHorasContext.ProfissionalDispositivo)">
+        <MappingFragment StoreEntitySet="ProfissionalDispositivo">
+          <ScalarProperty Name="ProfissionalDispositivoID" ColumnName="ProfissionalDispositivoID" />
+          <ScalarProperty Name="ProfissionalID" ColumnName="ProfissionalID" />
+          <ScalarProperty Name="Imei" ColumnName="Imei" />
+          <ScalarProperty Name="Telefone" ColumnName="Telefone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuario">
+      <EntityTypeMapping TypeName="IsTypeOf(ControleHorasContext.Usuario)">
+        <MappingFragment StoreEntitySet="Usuario">
+          <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Senha" ColumnName="Senha" />
+          <ScalarProperty Name="ClienteID" ColumnName="ClienteID" />
+          <ScalarProperty Name="ProfissionalID" ColumnName="ProfissionalID" />
+          <ScalarProperty Name="Adm" ColumnName="Adm" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+          <EntitySetMapping Name="HorasExtrasSet">
+            <EntityTypeMapping TypeName="ControleHorasContext.HorasExtras">
+              <MappingFragment StoreEntitySet="HorasExtras">
+                <ScalarProperty Name="ContratoID" ColumnName="ContratoID" />
+                <ScalarProperty Name="Pendente" ColumnName="Pendente" />
+                <ScalarProperty Name="DataFinal" ColumnName="DataFinal" />
+                <ScalarProperty Name="DataInicial" ColumnName="DataInicial" />
+                <ScalarProperty Name="ProfissionalID" ColumnName="ProfissionalID" />
+                <ScalarProperty Name="AprovacaoID" ColumnName="AprovacaoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

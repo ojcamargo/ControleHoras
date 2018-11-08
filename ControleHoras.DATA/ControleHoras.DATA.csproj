@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{793EEB78-DE82-42F3-B377-F6F0B58A58AA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ControleHoras.DATA</RootNamespace>
+    <AssemblyName>ControleHoras.DATA</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Activities" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Context\Alocacao.cs">
+      <DependentUpon>ControleHorasContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Context\Cliente.cs">
+      <DependentUpon>ControleHorasContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Context\ClienteIp.cs">
+      <DependentUpon>ControleHorasContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Context\ClienteLocal.cs">
+      <DependentUpon>ControleHorasContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Context\Contrato.cs">
+      <DependentUpon>ControleHorasContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Context\ControleHorasContext.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControleHorasContext.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Context\ControleHorasContext.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControleHorasContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Context\ControleHorasContext.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ControleHorasContext.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Context\Custom\AcompanhamentoDiario.cs" />
+    <Compile Include="Context\Custom\Contrato.cs" />
+    <Compile Include="Context\Custom\DemonstrativoHoras.cs" />
+    <Compile Include="Context\Custom\DemonstrativoLancamentos.cs" />
+    <Compile Include="Context\Custom\Lancamento.cs" />
+    <Compile Include="Context\Custom\RelatorioFaturamento.cs" />
+    <Compile Include="Context\Custom\RelatorioFaturamentoLancamentos.cs" />
+    <Compile Include="Context\Custom\RelatorioHorasLancamentos.cs" />
+    <Compile Include="Context\Custom\RelatorioHoras.cs" />
+    <Compile Include="Context\HorasExtras.cs">
+      <DependentUpon>ControleHorasContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Context\Lancamento.cs">
+      <DependentUpon>ControleHorasContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Context\Profissional.cs">
+      <DependentUpon>ControleHorasContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Context\ProfissionalDispositivo.cs">
+      <DependentUpon>ControleHorasContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Context\Usuario.cs">
+      <DependentUpon>ControleHorasContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\IAlocacaoService.cs" />
+    <Compile Include="Interfaces\IAlocacaoRepository.cs" />
+    <Compile Include="Interfaces\IBaseService.cs" />
+    <Compile Include="Interfaces\IBaseRepository.cs" />
+    <Compile Include="Interfaces\IClienteIpService.cs" />
+    <Compile Include="Interfaces\IClienteIpRepository.cs" />
+    <Compile Include="Interfaces\IClienteLocalService.cs" />
+    <Compile Include="Interfaces\IClienteLocalRepository.cs" />
+    <Compile Include="Interfaces\IClienteService.cs" />
+    <Compile Include="Interfaces\IClienteRepository.cs" />
+    <Compile Include="Interfaces\IContratoService.cs" />
+    <Compile Include="Interfaces\IContratoRepository.cs" />
+    <Compile Include="Interfaces\IHorasExtrasRepository.cs" />
+    <Compile Include="Interfaces\IHorasExtrasService.cs" />
+    <Compile Include="Interfaces\IRelatorioService.cs" />
+    <Compile Include="Interfaces\IRelatorioRepository.cs" />
+    <Compile Include="Interfaces\IDemonstrativoHorasRepository.cs" />
+    <Compile Include="Interfaces\IDemonstrativoHorasService.cs" />
+    <Compile Include="Interfaces\ILancamentoService.cs" />
+    <Compile Include="Interfaces\ILancamentoRepository.cs" />
+    <Compile Include="Interfaces\IProfissionalDispositivoService.cs" />
+    <Compile Include="Interfaces\IProfissionalDispositivoRepository.cs" />
+    <Compile Include="Interfaces\IProfissionalService.cs" />
+    <Compile Include="Interfaces\IProfissionalRepository.cs" />
+    <Compile Include="Interfaces\IUsuarioService.cs" />
+    <Compile Include="Interfaces\IUsuarioRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\BaseRepository.cs" />
+    <Compile Include="Repositories\AlocacaoRepository.cs" />
+    <Compile Include="Repositories\ClienteIpRepository.cs" />
+    <Compile Include="Repositories\ClienteLocalRepository.cs" />
+    <Compile Include="Repositories\ClienteRepository.cs" />
+    <Compile Include="Repositories\ContratoRepository.cs" />
+    <Compile Include="Repositories\HorasExtrasRepository.cs" />
+    <Compile Include="Repositories\RelatorioRepository.cs" />
+    <Compile Include="Repositories\DemonstrativoHorasRepository.cs" />
+    <Compile Include="Repositories\LancamentoRepository.cs" />
+    <Compile Include="Repositories\ProfissionalDispositivoRepository.cs" />
+    <Compile Include="Repositories\ProfissionalRepository.cs" />
+    <Compile Include="Repositories\UsuarioRepository.cs" />
+    <Compile Include="Services\AlocacaoService.cs" />
+    <Compile Include="Services\BaseService.cs" />
+    <Compile Include="Services\ClienteIpService.cs" />
+    <Compile Include="Services\ClienteLocalService.cs" />
+    <Compile Include="Services\ClienteService.cs" />
+    <Compile Include="Services\ContratoService.cs" />
+    <Compile Include="Services\HorasExtrasService.cs" />
+    <Compile Include="Services\RelatorioService.cs" />
+    <Compile Include="Services\DemonstrativoHorasService.cs" />
+    <Compile Include="Services\LancamentoService.cs" />
+    <Compile Include="Services\ProfissionalDispositivoService.cs" />
+    <Compile Include="Services\ProfissionalService.cs" />
+    <Compile Include="Services\UsuarioService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <EntityDeploy Include="Context\ControleHorasContext.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ControleHorasContext.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Context\ControleHorasContext.edmx.diagram">
+      <DependentUpon>ControleHorasContext.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Context\ControleHorasContext.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ControleHorasContext.edmx</DependentUpon>
+      <LastGenOutput>ControleHorasContext.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Context\ControleHorasContext.edmx.sql" />
+    <Content Include="Context\ControleHorasContext.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ControleHorasContext.edmx</DependentUpon>
+      <LastGenOutput>ControleHorasContext.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

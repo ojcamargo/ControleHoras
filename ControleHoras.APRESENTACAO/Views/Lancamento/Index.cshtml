@@ -1,0 +1,217 @@
+﻿@model ControleHoras.APRESENTACAO.Models.LancamentoViewModel
+
+@{
+    ViewBag.Title = "Lançamento de Horas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Lançamento de Horas</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <table class="table">
+            <tr>
+                <th>
+                    Profissional
+                </th>
+                <th>
+                    Contrato
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Profissional.Nome)
+                    @Html.HiddenFor(model => model.ProfissionalID)
+                </td>
+                <td>
+                    @Html.DropDownList("ContratoID", Model.Contratos, "")
+                </td>
+            </tr>
+        </table>
+
+        <div id="divEntrada" style="display: none; width: 100%;">
+            <img id="imgEntrada" src="@Url.Content("~/imagens/entrada.png")" alt="entrada" style="cursor: pointer; border: none; display: block; margin-left: auto; margin-right: auto;" />
+        </div>
+
+        <div id="divSaida" style="display: none; width: 100%;">
+            <b>Tempo decorrido desde o registro de entrada</b>
+            <div class="clockContainer">
+                <div class="clock">
+                    <ul class="clockElements">
+                        <li id="Date"></li>
+                        <li id="point">d</li>
+                        <li id="hours"> </li>
+                        <li id="point">h</li>
+                        <li id="min"> </li>
+                        <li id="point">m</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="margin: 10px 0px 10px 0px">
+                @Html.LabelFor(x => x.Atividade)
+                @Html.EditorFor(x => x.Atividade, new { htmlAttributes = new { @maxlength = "50", @style = "max-width: 450px; width: 450px;", @class = "form-control" } })
+            </div>
+            <div style="margin: 10px 0px 10px 0px">
+                @Html.LabelFor(x => x.Observacao)
+                @Html.EditorFor(model => Model.Observacao, new { htmlAttributes = new { @maxlength = "50", @style = "max-width: 450px; width: 450px;", @class = "form-control" } })
+            </div>
+            <!--accordion-->
+            <div id="optionalPane" style="margin: 10px 0px 10px 0px">
+                <h3>Horário de Saída</h3>
+                <div>
+                    <span>Informe somente pra lançamento retroativo</span>
+                    @Html.TextBoxFor(model => model.HorarioSaida, htmlAttributes: new { @class = "form-control inputTime" })
+                </div>
+            </div>
+            <img id="imgSaida" src="@Url.Content("~/imagens/saida.png")" alt="saída" style="cursor: pointer; border: none; display: block; margin-left: auto; margin-right: auto;" />
+        </div>
+
+    </div>
+}
+@section Styles {
+    @Styles.Render("~/styles/digitalClock")
+    @Styles.Render("~/styles/datetimepicker")
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/datetimepicker")
+    @Scripts.Render("~/bundles/digitalClock")
+
+    <script type="text/javascript">
+        $(function () {
+            //Accordion horário de saída
+            $("#optionalPane").accordion({
+                collapsible: true
+            });
+        });
+
+        $(document).ready(function () {
+            //Configuração de regionalização datepicker
+            jQuery('#HorarioSaida').datetimepicker({
+                format: 'd.m.Y H:i',
+                lang: 'pt-BR'
+            });
+        });
+
+        $("#ContratoID").change(function () {
+            if ($("#ContratoID").val() != "") {
+                $.ajax({
+                    url: "/Lancamento/ConsultarUltimoLancamento",
+                    type: "POST",
+                    data: JSON.stringify({ 'contratoId': $("#ContratoID").val(), 'profissionalId': $("#ProfissionalID").val() }),
+                    dataType: "json",
+                    traditional: true,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        if (data != null) {
+                            $("#divEntrada").hide();
+                            if (data.PermitirEntrada) {
+                                $("#divEntrada").show();
+                            }
+
+                            $("#divSaida").hide();
+                            if (data.PermitirSaida) {
+                                $("#divSaida").show();
+                                if (data.HorarioEntrada) {
+                                    digitalClock(new Date(parseInt(data.HorarioEntrada.substr(6))));
+                                }
+                            }
+                        }
+                        else {
+                            $("#divEntrada").show();
+                            $("#divSaida").hide();
+                        }
+                    },
+                    error: function (erro) {
+                        $.MessageBox("Erro ao consultar último lançamento: " + erro);
+                    }
+                });
+            }
+        });
+
+        $('#imgEntrada').click(function (e) {
+            if ($("#ContratoID").val() == "") {
+                $.MessageBox("Informe o contrato");
+                return false;
+            }
+
+            var model = {
+                ContratoID: $("#ContratoID").val(),
+                ProfissionalID: $("#ProfissionalID").val(),
+                Observacao: $("#Observacao").val()
+            };
+
+            $.ajax({
+                url: "/Lancamento/Entrada",
+                type: "POST",
+                data: JSON.stringify({ 'model': model }),
+                dataType: "json",
+                traditional: true,
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data == "sucesso") {
+                        $.MessageBox("Entrada efetuada");
+                        $("#divEntrada").hide();
+                        $("#divSaida").hide();
+                        $("#ContratoID option:selected").removeAttr("selected");
+                    }
+                    else
+                        $.MessageBox("Não foi possível efetuar o registro de entrada.\n" + data);
+                },
+                error: function (erro) {
+                    $.MessageBox("Erro ao efetuar lançamento: " + erro);
+                }
+            });
+        });
+
+        $('#imgSaida').click(function (e) {
+            if ($("#ContratoID").val() == "") {
+                $.MessageBox("Informe o contrato");
+                return false;
+            }
+            if ($("#Atividade").val() == "") {
+                $.MessageBox("Informe a atividade");
+                $("#Atividade").focus();
+                return false;
+            }
+
+            var model = {
+                ContratoID: $("#ContratoID").val(),
+                ProfissionalID: $("#ProfissionalID").val(),
+                Atividade: $("#Atividade").val(),
+                Observacao: $("#Observacao").val()
+
+            };
+
+            if ($("#HorarioSaida").val() != '')
+                model.HorarioSaida = $("#HorarioSaida").val();
+
+
+            $.ajax({
+                url: "/Lancamento/Saida",
+                type: "POST",
+                data: JSON.stringify({ 'model': model }),
+                dataType: "json",
+                traditional: true,
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data == "sucesso") {
+                        $.MessageBox("Saída efetuada");
+                        $("#divEntrada").hide();
+                        $("#divSaida").hide();
+                        $("#ContratoID option:selected").removeAttr("selected");
+                    }
+                    else
+                        $.MessageBox("Não foi possível efetuar o registro de saída.\n" + data);
+                },
+                error: function (erro) {
+                    $.MessageBox("Erro ao efetuar lançamento" + erro);
+                }
+            });
+        });
+
+    </script>
+}

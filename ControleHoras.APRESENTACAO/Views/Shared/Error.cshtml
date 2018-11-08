@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Erro";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="margin-top: 50px">
+    <h1>Falha de processamento.</h1>
+    <h2>Não foi possível processar a requisição.</h2>
+</div>
+<span>
+    @ViewBag.Mensagem
+</span>
+<div class="form-actions no-color">
+    <a href="javascript:history.back();">Voltar</a>
+</div>

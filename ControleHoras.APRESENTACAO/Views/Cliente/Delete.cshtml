@@ -1,0 +1,44 @@
+﻿@model ControleHoras.APRESENTACAO.Models.ClienteViewModel
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cadastro de Clientes</h2>
+<nav class="breadcrumb">
+    @Html.ActionLink("Cliente", "Index") /
+    <span class="breadcrumb-item active">Excluir Cliente</span>
+</nav>
+
+<h3 class="text-danger">Confirmar exclusão deste cliente?</h3>
+<div>
+    
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CNPJ)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CNPJ)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            &laquo;@Html.ActionLink("Voltar", "Index") | 
+            <input type="submit" value="Excluir" class="btn btn-danger" />
+        </div>
+    }
+</div>

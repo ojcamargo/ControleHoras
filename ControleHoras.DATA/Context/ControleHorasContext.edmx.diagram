@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="defc79c0f6714d1c9b1f15ed945e0b78" Name="Diagram1">
+        <EntityTypeShape EntityType="ControleHorasContext.Alocacao" Width="1.5" PointX="5.25" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ControleHorasContext.Cliente" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="ControleHorasContext.ClienteIp" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ControleHorasContext.ClienteLocal" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="ControleHorasContext.Contrato" Width="1.5" PointX="3" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ControleHorasContext.Lancamento" Width="1.5" PointX="7.5" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ControleHorasContext.Profissional" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ControleHorasContext.ProfissionalDispositivo" Width="1.5" PointX="6" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ControleHorasContext.Usuario" Width="1.5" PointX="6" PointY="10" IsExpanded="true" />
+        <AssociationConnector Association="ControleHorasContext.FK_Contrato_Alocacao" ManuallyRouted="false" />
+        <AssociationConnector Association="ControleHorasContext.FK_Profissional_Alocacao" ManuallyRouted="false" />
+        <AssociationConnector Association="ControleHorasContext.FK_Cliente_Contrato" ManuallyRouted="false" />
+        <AssociationConnector Association="ControleHorasContext.FK_Cliente_IP" ManuallyRouted="false" />
+        <AssociationConnector Association="ControleHorasContext.FK_Cliente_Local" ManuallyRouted="false" />
+        <AssociationConnector Association="ControleHorasContext.FK_Cliente_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="ControleHorasContext.FK_Profissional_Dispositivo" ManuallyRouted="false" />
+        <AssociationConnector Association="ControleHorasContext.FK_Profissional_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="ControleHorasContext.FK_LancamentoContrato" ManuallyRouted="false" />
+        <AssociationConnector Association="ControleHorasContext.FK_LancamentoProfissional" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ControleHorasContext.HorasExtras" Width="1.5" PointX="9" PointY="7.875" />
+        <AssociationConnector Association="ControleHorasContext.FK_HorasExtras_Contrato" />
+        <AssociationConnector Association="ControleHorasContext.FK_AprovacaoHorasExtras_Profissional1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,93 @@
+﻿@model ControleHoras.APRESENTACAO.Models.Monitoramento.Pesquisa.AcompanhamentoDiarioViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Registro de Presença</h1>
+
+@using (Html.BeginForm("Exibir", "AcompanhamentoDiario", FormMethod.Post))
+{
+    <h2>Acompanhamento Diário</h2>
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(model => model.ClienteID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ClienteID", Model.Clientes, "", new Dictionary<string, object> { { "class", "chosen-select" }, { "data-placeholder", "Selecione" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ContratoID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ContratoID", Model.Contratos, "", new Dictionary<string, object> { { "class", "chosen-select" }, { "data-placeholder", "Selecione" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProfissionalID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ProfissionalID", Model.Profissionais, "", new Dictionary<string, object> { { "class", "chosen-select" }, { "data-placeholder", "Selecione" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SituacaoID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("SituacaoID", new SelectList(new[] {
+                    new SelectListItem { Value = "", Text = "" },
+                    new SelectListItem { Value = "1", Text = "Presença Registrada" },
+                    new SelectListItem { Value = "2", Text = "Presença Registrada com Atraso" },
+                    new SelectListItem { Value = "3", Text = "Presença Não Registrada" }
+                }, "Text", "Text"), new Dictionary<string, object> { { "class", "chosen-select" }, { "data-placeholder", "Selecione" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Consultar" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Styles {
+    @Styles.Render("~/styles/chosen")
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/chosen")
+
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $("#ClienteID").chosen({ width: "200px", no_results_text: "Não encontrado", allow_single_deselect: true });
+            $("#ContratoID").chosen({ width: "250px", no_results_text: "Não encontrado", allow_single_deselect: true });
+            $("#ProfissionalID").chosen({ width: "250px", no_results_text: "Não encontrado", allow_single_deselect: true });
+            $("#Situacao").chosen({ width: "250px", no_results_text: "Não encontrado", allow_single_deselect: true });
+        });
+
+        $('#ClienteID').change(function () {
+            $.ajax({
+                type: "post",
+                url: "/AcompanhamentoDiario/ListarContratos",
+                data: { stateId: $('#ddlState').val() },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    var district = "<select id='ContratoID'>";
+                    district = district + '<option value="">--Select--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        district = district + '<option value=' + data[i].ContratoID + '>' + data[i].Descricao + '</option>';
+                    }
+                    district = district + '</select>';
+                    $('#District').html(district);
+                }
+            });
+        });
+
+
+    </script>
+}

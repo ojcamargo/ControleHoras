@@ -1,0 +1,15 @@
+﻿@using ControleHoras.APRESENTACAO.Models
+@{
+    ViewBag.Title = "Clientes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Clientes</h2>
+<ul>
+    <li>@Html.ActionLink("Cadastro", "Search", "Cliente")</li>
+    <li>@Html.ActionLink("Configurações de Rede", "Index", "ClienteIp")</li>
+    <li>@Html.ActionLink("Loalização", "Index", "ClienteLocal")</li>
+</ul>
+
+
+

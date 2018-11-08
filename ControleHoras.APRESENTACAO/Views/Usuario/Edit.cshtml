@@ -1,0 +1,70 @@
+﻿@model ControleHoras.APRESENTACAO.Models.UsuarioViewModel
+
+@{
+    ViewBag.Title = "Cadastro de Contratos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cadastro de Usuários</h2>
+<nav class="breadcrumb">
+    @Html.ActionLink("Cliente", "Index") /
+    <span class="breadcrumb-item active">Editar Usuário</span>
+</nav>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.UsuarioID)
+
+        @if (Model.ClienteID > 0)
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.ClienteID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.Cliente.Nome)
+                    @Html.HiddenFor(model => model.ClienteID)
+                </div>
+            </div>
+        }
+
+        @if (Model.ProfissionalID > 0)
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProfissionalID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.Profissional.Nome)
+                    @Html.HiddenFor(model => model.ProfissionalID)
+                </div>
+            </div>
+        }
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Login, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Login, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.Adm, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.Adm, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Adm, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Salvar" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    &laquo;@Html.ActionLink("Voltar", "Index")
+</div>

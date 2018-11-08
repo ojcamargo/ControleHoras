@@ -1,0 +1,203 @@
+﻿@model ControleHoras.APRESENTACAO.Models.ProfissionalViewModel
+
+@{
+    ViewBag.Title = "Cadastro de Profissionais";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Editar Profissional</h2>
+<nav class="breadcrumb">
+    @Html.ActionLink("Cliente", "Index") /
+    <span class="breadcrumb-item active">Editar Profissional</span>
+</nav>
+
+@using (Html.BeginForm(Html.BeginForm("Edit", "Profissional", FormMethod.Post, new { onsubmit = "FormatarValores()" })))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ProfissionalID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ModalidadeApuracao, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ModalidadeApuracao", new List<SelectListItem> {
+                    new SelectListItem{ Text="Hora Aberta", Value = "A", Selected = true },
+                    new SelectListItem{ Text="Hora Fechada", Value = "F" }
+                 },
+                 htmlAttributes: new { @id = "comboTipoHora", @class = "form-control", @onchange = "habilitarHorasMes();" })
+                @Html.ValidationMessageFor(model => model.ModalidadeApuracao, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div id="valHora" class="form-group">
+            @Html.LabelFor(model => model.ValorHora, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ValorHora, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ValorHora, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div id="valMensal" class="form-group">
+            @Html.LabelFor(model => model.ValorMensal, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ValorMensal, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ValorMensal, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ModalidadeApuracao, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("regime", new List<SelectListItem> {
+                    new SelectListItem{ Text="CLT", Value = "CLT", Selected = true },
+                    new SelectListItem{ Text="PJ", Value = "PJ" }
+                 },
+                 htmlAttributes: new { @id = "comboRegime", @class = "form-control", @onchange = "habilitarHorasMes();" })
+                @Html.ValidationMessageFor(model => model.ModalidadeApuracao, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HorarioEntrada, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.HorarioEntrada, htmlAttributes: new { @class = "form-control inputTime" })
+                @Html.ValidationMessageFor(model => model.HorarioEntrada, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HorarioSaida, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.HorarioSaida, htmlAttributes: new { @class = "form-control inputTime" })
+                @Html.ValidationMessageFor(model => model.HorarioSaida, "", new { @class = "text-danger" })
+            </div>
+        </div>      
+        
+        <div class="form-group">
+            @Html.Label("Período de Férias", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.FeriasInicio, htmlAttributes: new { @class = "form-control inputDate", @style = "display: inline" } )
+                <span>até</span>
+                @Html.TextBoxFor(model => model.FeriasTermino, htmlAttributes: new {  @class = "form-control inputDate", @style = "display: inline-block" } )
+                @Html.ValidationMessageFor(model => model.FeriasInicio, "", new { @class = "text-danger" })
+            </div>
+        </div>  
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Salvar" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    &laquo;@Html.ActionLink("Voltar", "Index")
+</div>
+
+@section Styles {
+    @Styles.Render("~/styles/datetimepicker")
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/mask")
+    @Scripts.Render("~/bundles/maskMoney")
+    @Scripts.Render("~/bundles/datetimepicker")
+
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $.datetimepicker.setLocale('pt-BR');
+            $("#FeriasInicio").datetimepicker({ format: 'd/m/Y', lang: 'pt-BR', timepicker: false, mask: true });
+            $("#FeriasTermino").datetimepicker({ format: 'd/m/Y', lang: 'pt-BR', timepicker: false, mask: true });
+            $('#HorarioEntrada').datetimepicker({ datepicker: false, format: 'H:i', value: '09:00' });
+            $('#HorarioSaida').datetimepicker({ datepicker: false, format: 'H:i', value: '18:00' });
+            $('#ValorHora').maskMoney({ prefix: 'R$', decimal: ',', thousands: '.', precision: 2, allowNegative: false });
+            $('#ValorMensal').maskMoney({ prefix: 'R$', decimal: ',', thousands: '.', precision: 2, allowNegative: false });
+        });
+
+        $('#comboTipoHora').ready(function () {
+
+            var tipoHora = $('#comboTipoHora').val();
+
+            if (tipoHora == 'A') {
+                $('#valMensal').hide();                
+            }
+
+            if (tipoHora == 'F') {
+                $('#valHora').hide();
+                
+            }
+        });
+
+        $('#comboTipoHora').change(function () {
+
+            var tipoHora = $('#comboTipoHora').val();
+
+            if (tipoHora == 'A') {
+                
+                $('#valMensal').hide();
+                $('#ValorMensal').val(0);
+                
+
+            } else {
+                $('#valMensal').show();
+            }
+
+            if (tipoHora == 'F') {
+                
+                $('#valHora').hide();
+                $('#ValorHora').val(0);                               
+
+            } else {
+                $('#valHora').show();
+            }
+        });
+
+        function FormatarValores() {
+            var valorHora = $("#ValorHora").val();
+            var valorMensal = $("#ValorMensal").val();
+
+            if (valorHora != '') {
+                valorHora = valorHora.replace("R$", "");
+                valorHora = valorHora.replace(".", "");
+                $("#ValorHora").val(valorHora);
+            }
+
+            if (valorMensal != '') {
+                valorMensal = valorMensal.replace("R$", "");
+                valorMensal = valorMensal.replace(".", "");
+                $("#ValorMensal").val(valorMensal);
+            }
+        }
+        //Aplicar mascara ao valor mensal quando carregar a pagina
+        $("#ValorMensal").ready(function () {
+            var valorMensal = $("#ValorMensal").val();
+            if (valorMensal != '') {
+                valorMensal = valorMensal.replace(".", ",");
+                $("#ValorMensal").val(parseFloat(valorMensal).toFixed(2));
+                $('#ValorMensal').trigger('mask.maskMoney')
+            }
+        });
+        //Aplicar mascara ao valor hora quando carregar a pagina
+        $("#ValorHora").ready(function () {
+            var valorHora = $("#ValorHora").val();
+            if (valorHora != '') {
+                valorHora = valorHora.replace(".", ",");
+                $("#ValorHora").val(parseFloat(valorMensal).toFixed(2));
+                $('#ValorHora').trigger('mask.maskMoney')
+            }
+        });
+
+    </script>
+}

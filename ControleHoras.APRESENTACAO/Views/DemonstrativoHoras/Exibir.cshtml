@@ -1,0 +1,396 @@
+﻿@using ControleHoras.APRESENTACAO.Models.Demonstrativos.Resultado
+@model ControleHoras.APRESENTACAO.Models.Demonstrativos.Resultado.HorasViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <style>
+        <!--
+        body {
+            font-family: arial;
+            font-size: 11px;
+            color: black;
+            background-color: white;
+        }
+
+        .fontSmall {
+            font-family: arial;
+            font-size: 8px;
+            color: black;
+            vertical-align: middle;
+        }
+
+        h1 {
+            font-family: Arial;
+            font-size: 25px;
+            color: black;
+            font-weight: bold;
+            text-align: center;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        h2 {
+            font-family: Arial;
+            font-size: 20px;
+            color: black;
+            font-weight: bold;
+            text-align: center;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        #header #profissional #lancamentos #footer {
+            width: 100%;
+            align-content: center;
+        }
+
+        .tableHeader {
+            font-family: Arial;
+            font-size: 11px;
+            border-style: solid;
+            border-width: 2px;
+            border-color: black;
+            width: 70%;
+            margin-left: 15%;
+            margin-right: 15%;
+        }
+
+        .tableHeaderRow {
+            height: 15px;
+        }
+
+        .tableHeaderLabel {
+            font-family: Arial;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            border-style: solid;
+            border-width: 2px;
+            border-color: black;
+            background-color: #17365D;
+            padding: 0px 5px 0cm 5px;
+            width: 25%;
+            height: 15px;
+        }
+
+        .tableHeaderContent {
+            font-family: Arial;
+            font-size: 11px;
+            border-style: solid;
+            border-width: 2px;
+            border-color: black;
+            padding: 0px 5px 0cm 5px;
+            width: 75%;
+            height: 15px;
+            border: solid black 1.0pt;
+            border-left: none;
+        }
+
+        .tableActivity {
+            font-family: Arial;
+            font-size: 11px;
+            border-style: solid;
+            border-width: 2px;
+            border-color: black;
+            width: 70%;
+            margin-left: 15%;
+            margin-right: 15%;
+        }
+
+        .tableActivityRow {
+            height: 15px;
+        }
+
+        .tableActivityLabel {
+            font-family: Arial;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            border-style: solid;
+            border-width: 2px;
+            border-color: black;
+            background-color: #17365D;
+            padding: 0px 5px 0cm 5px;
+            height: 15px;
+        }
+
+        .tableActivityContent {
+            font-family: Arial;
+            font-size: 11px;
+            border-style: solid;
+            border-width: 2px;
+            border-color: black;
+            padding: 0px 5px 0cm 5px;
+            height: 15px;
+            border: solid black 1.0pt;
+        }
+
+        .tableFooter {
+            font-family: Arial;
+            font-size: 11px;
+            border-style: solid;
+            border-width: 2px;
+            border-color: black;
+            width: 70%;
+            margin-left: 15%;
+            margin-right: 15%;
+        }
+
+        .tableFooterRow {
+            height: 15px;
+        }
+
+        .tableFooterLabel {
+            font-family: Arial;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            border-style: solid;
+            border-width: 2px;
+            border-color: black;
+            background-color: #17365D;
+            padding: 0px 5px 0cm 5px;
+            width: 25%;
+            height: 15px;
+        }
+
+        .tableFooterContent {
+            font-family: Arial;
+            font-size: 11px;
+            border-style: solid;
+            border-width: 2px;
+            border-color: black;
+            padding: 0px 5px 0cm 5px;
+            width: 75%;
+            height: 15px;
+            border: solid black 1.0pt;
+            border-left: none;
+        }
+
+        -->
+    </style>
+
+</head>
+
+<body>
+
+    @Html.ActionLink("Exportar para PDF", "GeneratePDF", Model, null)
+    <br />
+
+    <div id="header" class="fontSmall">
+        <img src="~/imagens/Logo.png" style="border: 0px none unset; width: 150px; height: 50px; float: right" />
+    </div>
+    
+    <hr style="clear: both; width: 100%" />
+
+    <div id="main">
+        
+        <h1>Demonstrativo de Horas Realizadas</h1>
+
+        <div id="profissional">
+
+            <table class="tableHeader">
+                <tr class="tableHeaderRow">
+                    <td class="tableHeaderLabel"><p>Consultor:</p></td>
+                    <td class="tableHeaderContent">
+                        <p>
+                            @Html.DisplayFor(model => model.Profissional.Nome)
+                        </p>
+                    </td>
+                </tr>
+                <tr class="tableHeaderRow">
+                    <td class="tableHeaderLabel"><p>Período:</p></td>
+                    <td class="tableHeaderContent">
+                        <p>
+                            @Html.DisplayFor(model => model.Periodo)
+                        </p>
+                    </td>
+                </tr>
+
+                <tr class="tableHeaderRow">
+                    <td class="tableHeaderLabel"><p>Data:</p></td>
+                    <td class="tableHeaderContent">
+                        <p>
+                            @Html.DisplayFor(model => model.Data)
+                        </p>
+                    </td>
+                </tr>
+
+                <tr class="tableHeaderRow">
+                    <td class="tableHeaderLabel"><p>Apuração:</p></td>
+                    <td class="tableHeaderContent">
+                        <p>
+                            @if (Model.Profissional.ModalidadeApuracao.Equals("A"))
+                            {
+                                @Html.Label("ModalidadeApuracao", "Hora Aberta");
+                            }
+                            else
+                            {
+                                @Html.Label("ModalidadeApuracao", "Hora Fechada");
+                            }
+                        </p>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+        <h2>Lançamentos / Atividades</h2>
+
+        <div id="lancamentos">
+
+            <table class="tableActivity">
+                <tr class="tableActivityRow">
+                    <td class="tableActivityLabel"><p>Cliente</p></td>
+                    <td class="tableActivityLabel"><p>Contrato/Proposta</p></td>
+                    <td class="tableActivityLabel"><p>Atuação</p></td>
+                    <td class="tableActivityLabel"><p>Qtd Hrs</p></td>
+                    <td class="tableActivityLabel"><p>Dias</p></td>
+                    <td class="tableActivityLabel"><p>Valor</p></td>
+                    <td class="tableActivityLabel"><p>Crédito / Débito</p></td>
+                </tr>
+
+                @if (Model.Lancamentos != null && Model.Lancamentos.Count > 0)
+                {
+                    foreach (HorasLancamentoViewModel item in Model.Lancamentos)
+                    {
+
+                    <tr class="tableActivityRow">
+                        <td class="tableActivityContent">
+                            <p>
+                                @Html.DisplayFor(i => item.Contrato.Cliente.Nome)
+                            </p>
+                        </td>
+                        <td class="tableActivityContent">
+                            <p>
+                                @Html.DisplayFor(i => item.Contrato.NumeroReferencia)
+                            </p>
+                        </td>
+                        <td class="tableActivityContent">
+                            <p>
+                                @Html.DisplayFor(i => item.Contrato.Descricao)
+                            </p>
+                        </td>
+                        <td class="tableActivityContent">
+                            <p>
+                                @Html.DisplayFor(i => item.QtdHoras)
+                            </p>
+                        </td>
+                        <td class="tableActivityContent">
+                            <p>
+                                @Html.DisplayFor(i => item.QtdDiasTrabalhados)
+                            </p>
+                        </td>
+                        <td class="tableActivityContent">
+                            <p>
+                                @Html.DisplayFor(i => item.ValorBase)
+                            </p>
+                        </td>
+                        <td class="tableActivityContent">
+                            <p>
+                                @Html.DisplayFor(i => item.ValorPorContrato)
+                            </p>
+                        </td>
+                    </tr>
+                    }
+                }
+                <tr class="tableActivityRow">
+                    <td class="tableActivityContent" colspan="6"><p>Total</p></td>
+                    <td class="tableActivityContent">
+                        <p>
+                            @Html.DisplayFor(model => model.ValorTotal)
+                        </p>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+        <h2>Observações</h2>
+
+        <p style='text-align:center;text-indent:25px'>
+            Total a pagar calculado de acordo com Contrato de Prestação de Serviços entre as partes e planilha de horas emitida pelo Consultor e aprovada pelo Cliente.
+        </p>
+
+        <p style='text-align:center;text-indent:25px'>
+            <b>IMPORTANTE: Emitir nota fiscal que deve ser endereçada impreterivelmente até o 5º dia útil do mês subsequente.</b>
+        </p>
+
+        <h2>Dados da Empresa - Emissão de Nota fiscal</h2>
+
+        <table class="tableFooter">
+            <tr class="tableFooterRow">
+                <td class="tableFooterLabel"><p>Razão Social:</p></td>
+                <td class="tableFooterContent"><p>Computécnica Tecnologia Ltda</p></td>
+            </tr>
+            <tr class="tableFooterRow">
+                <td class="tableFooterLabel">
+                    <p>Endereço da Matriz:</p>
+                    <p>(Faturamento / Cobrança):</p>
+                </td>
+                <td class="tableFooterContent">
+                    <p>Rua Faustolo, 820 – Vila Romana</p>
+                    <p>São Paulo/SP - CEP 05041-000</p>
+                </td>
+            </tr>
+            <tr class="tableFooterRow">
+                <td class="tableFooterLabel"><p>Telefone e Fax:</p></td>
+                <td class="tableFooterContent">
+                    <p>+55 (11) – 2134-9000</p>
+                    <p>Fax +55 (11) 2134-9044</p>
+                </td>
+            </tr>
+            <tr class="tableFooterRow">
+                <td class="tableFooterLabel"><p>CNPJ – Matriz:</p></td>
+                <td class="tableFooterContent">
+                    <p>54.385.620/0001-15</p>
+                </td>
+            </tr>
+            <tr class="tableFooterRow">
+                <td class="tableFooterLabel">
+                    <p>Inscrição Estadual:</p>
+                </td>
+                <td class="tableFooterContent">
+                    <p>145.349.582.112</p>
+                </td>
+            </tr>
+            <tr class="tableFooterRow">
+                <td class="tableFooterLabel">
+                    <p>Inscrição Municipal:</p>
+                </td>
+                <td class="tableFooterContent">
+                    <p>4.542.523-0</p>
+                </td>
+            </tr>
+            <tr class="tableFooterRow">
+                <td class="tableFooterLabel">
+                    <p>E-mail (Nota Fiscal)</p>
+                </td>
+                <td class="tableFooterContent">
+                    <p>nfterceiros@computecnica.com.br</p>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+    <hr style="clear: both; width: 100%;" />
+    <div id="footer" class="fontSmall">
+        <p style="float: left;">
+            www.computecnica.com.br | + 55 (11) 2134-9000
+            Rua Faustolo, 820 – Vl Romana | São Paulo - SP
+        </p>
+        <img src="~/imagens/Logo.png" style="border: 0px none unset; width: 150px; height: 50px; float: right" />
+    </div>
+
+</body>
+
+</html>

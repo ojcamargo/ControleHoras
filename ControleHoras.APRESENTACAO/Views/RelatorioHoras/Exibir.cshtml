@@ -1,0 +1,240 @@
+﻿@using ControleHoras.APRESENTACAO.Models.Relatorios.Resultado
+@model ControleHoras.APRESENTACAO.Models.Relatorios.Resultado.HorasViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <style>
+    <!--
+        body {
+            font-family: arial;
+            font-size: 11px;
+            color: black;
+            background-color: white;
+        }
+
+        h1 {
+            font-family: Arial;
+            font-size: 25px;
+            color: black;
+            font-weight: bold;
+            text-align: center;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        h2 {
+            font-family: Arial;
+            font-size: 20px;
+            color: black;
+            font-weight: bold;
+            text-align: center;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .tableHeader {
+            font-family: Arial;
+            font-size: 11px;
+            border-style: solid;
+            border-width: 2px;
+            border-color: black;
+            width: 70%;
+            margin-left: 15%;
+            margin-right: 15%;
+        }
+
+        .tableHeaderRow {
+            height: 15px;
+        }
+
+        .tableHeaderLabel {
+            font-family: Arial;
+            font-size: 12px;
+            font-weight: bold;
+            color: black;
+            border-style: solid;
+            border-width: 2px;
+            border-color: black;
+            background-color: transparent;
+            padding: 0px 5px 0cm 5px;
+            width: 25%;
+            height: 15px;
+        }
+        
+        .tableHeaderContent {
+            font-family: Arial;
+            font-size: 11px;
+            border-style: solid;
+            border-width: 2px;
+            border-color: black;
+            padding: 0px 5px 0cm 5px;
+            width: 75%;
+            height: 15px;
+            border: solid black 1.0pt;
+            border-left: none;
+        }
+
+        .tableItem {
+            font-family: Arial;
+            font-size: 11px;
+            border-style: solid;
+            border-width: 2px;
+            border-color: black;
+            width: 70%;
+            margin-left: 15%;
+            margin-right: 15%;
+        }
+
+        .tableItemRow {
+            height: 15px;
+        }
+
+        .tableItemLabel {
+            font-family: Arial;
+            font-size: 12px;
+            font-weight: bold;
+            color: black;
+            border-style: solid;
+            border-width: 2px;
+            border-color: black;
+            background-color: transparent;
+            padding: 0px 5px 0cm 5px;
+            height: 15px;
+        }
+
+        .tableItemContent {
+            font-family: Arial;
+            font-size: 11px;
+            border-style: solid;
+            border-width: 2px;
+            border-color: black;
+            padding: 0px 5px 0cm 5px;
+            height: 15px;
+            border: solid black 1.0pt;
+        }
+    -->
+    </style>
+</head>
+
+<body>
+
+    @Html.ActionLink("Exportar para PDF", "GeneratePDF", Model, null)
+    <br />
+
+    <div id="main">
+        
+        <h1>Relatório de Horas</h1>
+
+        <div id="profissional">
+
+            <table class="tableHeader">
+                <tr class="tableHeaderRow">
+                    <td class="tableHeaderLabel"><p>Consultor:</p></td>
+                    <td class="tableHeaderContent">
+                        <p>
+                            @Html.DisplayFor(model => model.Profissional)
+                        </p>
+                    </td>
+                </tr>
+                <tr class="tableHeaderRow">
+                    <td class="tableHeaderLabel"><p>Período:</p></td>
+                    <td class="tableHeaderContent">
+                        <p>
+                            @Html.DisplayFor(model => model.Periodo)
+                        </p>
+                    </td>
+                </tr>
+
+                <tr class="tableHeaderRow">
+                    <td class="tableHeaderLabel"><p>Data:</p></td>
+                    <td class="tableHeaderContent">
+                        <p>
+                            @Html.DisplayFor(model => model.DataEmissao)
+                        </p>
+                    </td>
+                </tr>
+
+            </table>
+
+        </div>
+
+        <h2>Lançamentos</h2>
+
+        <div id="lancamentos">
+
+            <table class="tableItem">
+                <tr class="tableItemRow">
+                    <td class="tableItemLabel" rowspan="2"><p>Cliente</p></td>
+                    <td class="tableItemLabel" rowspan="2"><p>Contrato</p></td>
+                    <td class="tableItemLabel" colspan="2"><p>Entrada</p></td>
+                    <td class="tableItemLabel" colspan="2"><p>Saída</p></td>
+                    <td class="tableItemLabel" rowspan="2"><p>Atividade</p></td>
+                </tr>
+                <tr class="tableItemRow">
+                    <td class="tableItemLabel"><p>Data</p></td>
+                    <td class="tableItemLabel"><p>Horário</p></td>
+                    <td class="tableItemLabel"><p>Data</p></td>
+                    <td class="tableItemLabel"><p>Horário</p></td>
+                </tr>
+
+                @if (Model.Lancamentos != null && Model.Lancamentos.Count > 0)
+                {
+                    foreach (HorasLancamentoViewModel item in Model.Lancamentos)
+                    {
+
+                    <tr class="tableItemRow">
+                        <td class="tableItemContent">
+                            <p>
+                                @Html.DisplayFor(i => item.Cliente)
+                            </p>
+                        </td>
+                        <td class="tableItemContent">
+                            <p>
+                                @Html.DisplayFor(i => item.Contrato)
+                            </p>
+                        </td>
+                        <td class="tableItemContent">
+                            <p>
+                                @Html.DisplayFor(i => item.DataEntrada)
+                            </p>
+                        </td>
+                        <td class="tableItemContent">
+                            <p>
+                                @Html.DisplayFor(i => item.HoraEntrada)
+                            </p>
+                        </td>
+                        <td class="tableItemContent">
+                            <p>
+                                @Html.DisplayFor(i => item.DataSaida)
+                            </p>
+                        </td>
+                        <td class="tableItemContent">
+                            <p>
+                                @Html.DisplayFor(i => item.HoraSaida)
+                            </p>
+                        </td>
+                        <td class="tableItemContent">
+                            <p>
+                                @Html.DisplayFor(i => item.Atividade)
+                            </p>
+                        </td>
+                        
+                    </tr>
+                    }
+                }
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

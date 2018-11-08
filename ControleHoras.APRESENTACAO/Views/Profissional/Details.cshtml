@@ -1,0 +1,75 @@
+﻿@model ControleHoras.APRESENTACAO.Models.ProfissionalViewModel
+
+@{
+    ViewBag.Title = "Cadastro de Profissionais";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Detalhes</h2>
+<nav class="breadcrumb">
+    @Html.ActionLink("Cliente", "Index") /
+    <span class="breadcrumb-item active">Detalhes</span>
+</nav>
+<div>
+    
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HorarioEntrada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HorarioEntrada)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HorarioSaida)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HorarioSaida)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ValorHora)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValorHora)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ValorMensal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValorMensal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModalidadeApuracao)
+        </dt>
+
+        <dd>
+                
+            @Html.DropDownList("ModalidadeApuracao", new List<SelectListItem> {
+                new SelectListItem{ Text="Hora Aberta", Value = "A", Selected = true },
+                new SelectListItem{ Text="Hora Fechada", Value = "F" }
+            },
+            htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+        </dd>
+        <dt>
+            <button type="button" class="btn btn-success">@Html.ActionLink("Editar", "Edit", new { id = Model.ProfissionalID })</button>
+        </dt>
+    </dl>
+</div>
+<p>
+    &laquo;@Html.ActionLink("Voltar", "Index")
+</p>

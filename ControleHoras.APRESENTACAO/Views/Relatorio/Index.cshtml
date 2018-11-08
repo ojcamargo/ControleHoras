@@ -1,0 +1,19 @@
+﻿@using ControleHoras.APRESENTACAO.Models
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Relatórios</h2>
+<ul>
+    @if (((UsuarioViewModel)Session["usuario"]).Adm)
+    {
+        <li>@Html.ActionLink("Demonstrativo de Horas", "DemonstrativoHoras", "Login")</li>
+        <li>@Html.ActionLink("Relatório de Faturamento", "RelatorioFaturamento", "Login")</li>
+        <li>@Html.ActionLink("Acompanhamento Diário de Lançamentos", "AcompanhamentoDiario", "Login")</li>
+    }
+    <li>@Html.ActionLink("Relatório de Horas", "RelatorioHoras", "Login")</li>
+</ul>
+
+
+

@@ -1,0 +1,32 @@
+﻿@model ControleHoras.APRESENTACAO.Models.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Login</h2>
+
+@using (Html.BeginForm("Login", "Restrito", FormMethod.Post))
+{
+    <div class="container" style="height: 500px;">
+        <div style="height 200px; max-width: 250px; margin-left: 40%; margin-top: 15%;">
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            @Html.LabelFor(model => model.Login)
+            <br />
+            @Html.TextBoxFor(model => model.Login)
+            @Html.ValidationMessageFor(model => model.Login)
+            <br />
+            @Html.LabelFor(model => model.Senha)
+            <br />
+            @Html.PasswordFor(model => model.Senha)
+            @Html.ValidationMessageFor(model => model.Senha)
+            <br />
+            <br />
+            <input type="submit" value="Entrar" class="btn" />
+            <input type="button" value="Esqueci minha senha" class="btn" onclick="@Url.Action("RecuperarSenha","Login")" />
+            <br />
+            @Html.ValidationMessage("CustomMessage")
+        </div>
+    </div>

@@ -1,0 +1,155 @@
+﻿@model ControleHoras.APRESENTACAO.Models.ContratoViewModel
+
+@{
+    ViewBag.Title = "Cadastro de Contratos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Exclusão de Contrato</h2>
+<nav class="breadcrumb">
+    @Html.ActionLink("Cliente", "Index") /
+    <span class="breadcrumb-item active">Excluir Contrato</span>
+</nav>
+
+<h3 class="text-danger">Deseja realmente excluir este contrato?</h3>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ClienteID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cliente.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroReferencia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumeroReferencia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModalidadeContrato)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModalidadeContrato)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModalidadeApuracao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModalidadeApuracao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QtdHorasMes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QtdHorasMes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ApuracaoHoraExtra)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApuracaoHoraExtra)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ValorHoraExtra)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValorHoraExtra)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataInicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataInicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataFim)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataFim)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ValorHora)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValorHora)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HorarioEntrada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HorarioEntrada)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HorarioSaida)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HorarioSaida)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IntervaloInicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IntervaloInicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IntervaloFim)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IntervaloFim)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ValidarLocalizacao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValidarLocalizacao)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            &laquo;@Html.ActionLink("Voltar", "Index") | 
+            <input type="submit" value="Excluir" class="btn btn-danger" />
+        </div>
+    }
+</div>

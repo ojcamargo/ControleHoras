@@ -1,0 +1,51 @@
+﻿@model ControleHoras.APRESENTACAO.Models.ProfissionalDispositivoViewModel
+
+@{
+    ViewBag.Title = "Cadastro de Dispositivos Móveis";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cadastro de Dispositivos Móveis</h2>
+<nav class="breadcrumb">
+    @Html.ActionLink("Cliente", "Index") /
+    <span class="breadcrumb-item active">Excluir Dispositivo Móvel</span>
+</nav>
+
+<h3 class="text-danger">Tem certeza que deseja excluir este dispositivo?</h3>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProfissionalID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Profissional.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Imei)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Imei)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefone)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            &laquo;@Html.ActionLink("Voltar", "Index") | 
+            <input type="submit" value="Excluir" class="btn btn-danger" /> 
+        </div>
+    }
+</div>

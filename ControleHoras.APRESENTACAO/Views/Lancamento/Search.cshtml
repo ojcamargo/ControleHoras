@@ -1,0 +1,70 @@
+﻿@model ControleHoras.APRESENTACAO.Models.LancamentoPesquisaViewModel
+
+@{
+    ViewBag.Title = "Lançamento de Horas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Lançamento de Horas</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        <h4>Editar Lançamentos</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProfissionalID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ProfissionalID", Model.Profissionais, "", new Dictionary<string, object> { { "class", "chosen-select" }, { "data-placeholder", "Selecione" } })
+                @Html.ValidationMessageFor(model => model.ProfissionalID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="Pesquisar" class="btn btn-default" onclick="efetuarPesquisa()" />
+            </div>
+        </div>
+    </div>
+}
+
+<div id="resultado">
+
+</div>
+
+@*@if(Model.Lancamentos != null && Model.Lancamentos.Count > 0)
+{
+    var listaModel = Model.Lancamentos;
+    , listaModel)
+}*@
+
+@section Styles {
+    @Styles.Render("~/styles/chosen")
+    @Styles.Render("~/styles/datetimepicker")
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/datetimepicker")
+    @Scripts.Render("~/bundles/chosen")
+    @Scripts.Render("~/bundles/moment")
+
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $("#ProfissionalID").chosen({ width: "200px", no_results_text: "Não encontrado", allow_single_deselect: true });
+        });
+
+        function efetuarPesquisa() {
+            if (!$('#ProfissionalID').val()) {
+                $.MessageBox("Selecione o profissional");
+                $('#ProfissionalID').focus();
+            } else {   
+                $("#resultado").load('/Lancamento/BuscarLancamentosProfissional?profissionalId=' + $("#ProfissionalID").val());
+            }
+        }
+
+    </script>
+
+}

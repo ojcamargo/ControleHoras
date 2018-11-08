@@ -1,0 +1,73 @@
+﻿@model ControleHoras.APRESENTACAO.Models.ProfissionalDispositivoViewModel
+
+@{
+    ViewBag.Title = "Cadastro de Dispositivos Móveis";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cadastro de Dispositivos Móveis</h2>
+<nav class="breadcrumb">
+    @Html.ActionLink("Cliente", "Index") /
+    <span class="breadcrumb-item active">Novo Cadastro</span>
+</nav>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProfissionalID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ProfissionalID", Model.ListaProfissionaisAtivos, "", new Dictionary<string, object> { { "class", "chosen-select" }, { "data-placeholder", "Selecione" } })
+                @Html.ValidationMessageFor(model => model.ProfissionalID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Imei, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Imei, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Imei, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Telefone, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Telefone, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Telefone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Criar" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    &laquo;@Html.ActionLink("Voltar", "Index")
+</div>
+
+@section Styles {
+    @Styles.Render("~/styles/chosen")
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/mask")
+    @Scripts.Render("~/bundles/chosen")
+
+    <script type="text/javascript">
+        
+        jQuery(function ($) {
+            $("#Telefone").mask("(99)99999-9999");
+            $("#ProfissionalID").chosen({ width: "200px", no_results_text: "Não encontrado", allow_single_deselect: true });
+        });
+
+    </script>
+}

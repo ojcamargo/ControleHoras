@@ -1,0 +1,39 @@
+﻿@model ControleHoras.APRESENTACAO.Models.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-login">
+    <h3>Acesso ao sistema</h3>
+
+    @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+    {
+        <div class="container">
+            <div>
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
+                
+                @Html.LabelFor(model => model.Login, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.TextBoxFor(model => model.Login, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Login, "", new { @class = "text-danger" })
+                
+
+                <br />
+                @Html.LabelFor(model => model.Senha, htmlAttributes: new { @class = "control-label col-md-2" })
+                <br />
+                @Html.PasswordFor(model => model.Senha, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Senha, "", new { @class = "text-danger" })
+                <br />
+                @Html.LabelFor(model => model.ModoAutenticacao, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.DropDownListFor(model => model.ModoAutenticacao, Model.ListaDominios, "", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ModoAutenticacao, "", new { @class = "text-danger" })
+                <br />
+                <input type="submit" value="Entrar" class="btn btn-lg btn-primary btn-block" />
+                <br />
+                @Html.ValidationMessage("CustomMessage")
+            </div>
+        </div>
+    }
+</div>

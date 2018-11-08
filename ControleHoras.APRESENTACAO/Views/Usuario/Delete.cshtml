@@ -1,0 +1,68 @@
+﻿@model ControleHoras.APRESENTACAO.Models.UsuarioViewModel
+
+@{
+    ViewBag.Title = "Cadastro de Usuários";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Exclusão de Usuário</h2>
+<nav class="breadcrumb">
+    @Html.ActionLink("Cliente", "Index") /
+    <span class="breadcrumb-item active">Excluir Usuário</span>
+</nav>
+
+<h3 class="text-danger">Deseja realmente excluir este usuário?</h3>
+<div>
+    
+    <dl class="dl-horizontal">
+        
+        <dt>
+            @Html.DisplayName("Cliente/Profissional")
+        </dt>
+
+        <dd>
+            @if (Model.ClienteID > 0)
+            {
+                @Html.DisplayFor(model => model.Cliente.Nome)
+            }
+            else if (Model.ProfissionalID > 0)
+            {
+                @Html.DisplayFor(model => model.Profissional.Nome)
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Login)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Login)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProfissionalID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProfissionalID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Adm)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Adm)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            &laquo;@Html.ActionLink("Voltar", "Index") | 
+            <input type="submit" value="Excluir" class="btn btn-danger" /> 
+        </div>
+    }
+</div>

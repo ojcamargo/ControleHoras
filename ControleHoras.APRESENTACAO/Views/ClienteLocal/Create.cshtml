@@ -1,0 +1,160 @@
+﻿@model ControleHoras.APRESENTACAO.Models.ClienteLocalViewModel
+
+@{
+    ViewBag.Title = "Configurações de Localização";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Configurações de Localização</h2>
+<nav class="breadcrumb">
+    @Html.ActionLink("Cliente", "Index") /
+    <span class="breadcrumb-item active">Novo Cadastro</span>
+</nav>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ClienteID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ClienteID", Model.ListaClientesAtivos, "", new Dictionary<string, object> { { "class", "chosen-select" }, { "data-placeholder", "Selecione" } })
+                @Html.ValidationMessageFor(model => model.ClienteID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Logradouro, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Logradouro, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Logradouro, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NumeroLogradouro, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NumeroLogradouro, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NumeroLogradouro, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Complemento, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Complemento, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Complemento, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Bairro, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Bairro, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Bairro, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cidade, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Cidade, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Cidade, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UF, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("UF", new SelectList(new[] {
+                    new SelectListItem { Text = "" },
+                    new SelectListItem { Text = "AC" },
+                    new SelectListItem { Text = "AL" },
+                    new SelectListItem { Text = "AM" },
+                    new SelectListItem { Text = "AP" },
+                    new SelectListItem { Text = "BA" },
+                    new SelectListItem { Text = "CE" },
+                    new SelectListItem { Text = "DF" },
+                    new SelectListItem { Text = "ES" },
+                    new SelectListItem { Text = "GO" },
+                    new SelectListItem { Text = "MA" },
+                    new SelectListItem { Text = "MG" },
+                    new SelectListItem { Text = "MS" },
+                    new SelectListItem { Text = "MT" },
+                    new SelectListItem { Text = "PA" },
+                    new SelectListItem { Text = "PB" },
+                    new SelectListItem { Text = "PE" },
+                    new SelectListItem { Text = "PI" },
+                    new SelectListItem { Text = "PR" },
+                    new SelectListItem { Text = "RJ" },
+                    new SelectListItem { Text = "RN" },
+                    new SelectListItem { Text = "RO" },
+                    new SelectListItem { Text = "RR" },
+                    new SelectListItem { Text = "SC" },
+                    new SelectListItem { Text = "SE" },
+                    new SelectListItem { Text = "SP" },
+                    new SelectListItem { Text = "TO" }
+                }, "Text", "Text"), new Dictionary<string, object> { { "class", "chosen-select" }, { "data-placeholder", "Selecione" } })
+                @Html.ValidationMessageFor(model => model.UF, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CEP, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CEP, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CEP, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Longitude, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Longitude, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Longitude, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Latitude, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Latitude, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Latitude, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Criar" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    &laquo;@Html.ActionLink("Voltar", "Index")
+</div>
+
+@section Styles {
+    @Styles.Render("~/styles/chosen")
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/mask")
+    @Scripts.Render("~/bundles/chosen")
+
+    <script type="text/javascript">
+
+        jQuery(function ($) {
+            $("#CEP").mask("99999-999");
+
+            $("#ClienteID").chosen({ width: "200px", no_results_text: "Não encontrado", allow_single_deselect: true });
+            $("#UF").chosen({ width: "100px", no_results_text: "Não encontrado", allow_single_deselect: true });
+        });
+
+    </script>
+}

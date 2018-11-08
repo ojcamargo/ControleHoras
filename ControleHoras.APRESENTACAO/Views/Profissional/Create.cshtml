@@ -1,0 +1,161 @@
+﻿@model ControleHoras.APRESENTACAO.Models.ProfissionalViewModel
+
+@{
+    ViewBag.Title = "Cadastro de Profissionais";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cadastro de Profissionais</h2>
+<nav class="breadcrumb">
+    @Html.ActionLink("Cliente", "Index") /
+    <span class="breadcrumb-item active">Novo Cadastro</span>
+</nav>
+
+@using (Html.BeginForm("Create", "Profissional", FormMethod.Post, new { onsubmit = "FormatarValores()" }))
+{
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ModalidadeApuracao, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ModalidadeApuracao", new List<SelectListItem> {
+                    new SelectListItem{ Text="Hora Aberta", Value = "A", Selected = true },
+                    new SelectListItem{ Text="Hora Fechada", Value = "F" }
+                 },
+                 htmlAttributes: new { @id = "comboTipoHora", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ModalidadeApuracao, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div id="valHora" class="form-group">
+            @Html.LabelFor(model => model.ValorHora, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ValorHora, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ValorHora, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div id="valMensal" class="form-group">
+            @Html.LabelFor(model => model.ValorMensal, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ValorMensal, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ValorMensal, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Regime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("regime", new List<SelectListItem> {
+                    new SelectListItem{ Text="CLT", Value = "CLT", Selected = true },
+                    new SelectListItem{ Text="PJ", Value = "PJ" }
+                 },
+                 htmlAttributes: new { @id = "comboRegime", @class = "form-control"  })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HorarioEntrada, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.HorarioEntrada, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.HorarioEntrada, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HorarioSaida, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.HorarioSaida, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.HorarioSaida, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Criar" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    &laquo;@Html.ActionLink("Voltar", "Index")
+</div>
+
+
+@section Styles {
+    @Styles.Render("~/styles/datetimepicker")
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/mask")
+    @Scripts.Render("~/bundles/maskMoney")
+    @Scripts.Render("~/bundles/datetimepicker")
+
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $.datetimepicker.setLocale('pt-BR');
+            $('#HorarioEntrada').datetimepicker({ datepicker: false, format: 'H:i', value: '09:00' });
+            $('#HorarioSaida').datetimepicker({ datepicker: false, format: 'H:i', value: '18:00' });
+            $('#ValorHora').maskMoney({ prefix: 'R$', decimal: ',', thousands: '.', precision: 2, allowNegative: false });
+            $('#ValorMensal').maskMoney({ prefix: 'R$', decimal: ',', thousands: '.', precision: 2, allowNegative: false });
+        });
+
+
+        $('#comboTipoHora').ready(function () {
+
+            var tipoHora = $('#comboTipoHora').val();
+
+            if (tipoHora == 'A') {
+                $('#valMensal').hide();
+            }
+        });
+
+        $('#comboTipoHora').change(function () {
+
+            var tipoHora = $('#comboTipoHora').val();
+
+            if (tipoHora == 'A') {
+                $('#valMensal').hide();
+            } else {
+                $('#valMensal').show();
+            }
+
+            if (tipoHora == 'F') {
+                $('#valHora').hide();
+
+            } else {
+                $('#valHora').show();
+            }
+        });
+
+        //Retirar mascara e enviar valores no formato americano
+        function FormatarValores() {
+            var valorHora = $("#ValorHora").val();
+            var valorMensal = $("#ValorMensal").val();
+
+            if (valorHora != '') {
+                valorHora = valorHora.replace("R$", "");
+                valorHora = valorHora.replace(".", "");
+                $("#ValorHora").val(valorHora);
+            }
+
+            if (valorMensal != '') {
+                valorMensal = valorMensal.replace("R$", "");
+                valorMensal = valorMensal.replace(".", "");
+                $("#ValorMensal").val(valorMensal);
+            }
+        }
+    </script>
+}

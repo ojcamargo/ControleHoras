@@ -1,0 +1,37 @@
+﻿@model ControleHoras.APRESENTACAO.Models.ClienteIpViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Configurações de Rede</h2>
+<nav class="breadcrumb">
+    @Html.ActionLink("Cliente", "Index") /
+    <span class="breadcrumb-item active">Detalhes</span>
+</nav>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ClienteID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cliente.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ip)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ip)
+        </dd>
+        <dt>
+            <button type="button" class="btn btn-success">@Html.ActionLink("Editar", "Edit", new { id = Model.ClienteIpID })</button>
+        </dt>
+    </dl>
+</div>
+<p>
+    &laquo;@Html.ActionLink("Voltar", "Index")
+</p>
